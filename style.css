@@ -30,13 +30,20 @@ header { text-align: center }
 }
 
 .navbar {
-    margin-top: -40px;
+    margin-top: -60px;
     font-size: 18px;
     background-color: #fff;
 }
 
+.navlist {
+    display: flex;
+    justify-content: center;
+}
+
 .navitem {
+    text-align: center;
     display: inline-block;
+    margin: 2px;
     border: 1px solid black;
 }
 
