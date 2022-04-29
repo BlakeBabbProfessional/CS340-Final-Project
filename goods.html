@@ -61,6 +61,23 @@
     </aside>
     
     <h1>Goods</h1>
+
+    <aside class="filter">
+        <div class="entity-field-container">
+            <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
+            <input type="text" id="entity-filter-input">
+        </div>
+        <div class="entity-input-container">
+            <select name="filter-dropdown" id="filter-dropdown-goods">
+                <option value="good-id">ID</option>
+                <option value="good-location">Location</option>
+                <option value="good-expire-date">Expiration Date</option>
+                <option value="good-supplier-id">Supplier ID</option>
+                <option value="good-order-id">Order ID</option>
+            </select>
+        </div>
+    </aside>
+
     <div class="table-container">
         <table>
             <tr>
