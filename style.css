@@ -19,6 +19,18 @@ table, th, td {
     justify-content: center;
 }
 
+/* filter */
+
+.filter {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.filter-text-input {
+    text-align: center;
+}
+
 /* insert */
 
 .entity-field-container {

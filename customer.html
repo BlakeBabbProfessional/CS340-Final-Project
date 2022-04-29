@@ -63,6 +63,23 @@
     </aside>
 
     <h1>Customers</h1>
+
+    <aside class="filter">
+        <div class="entity-field-container">
+            <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
+            <input type="text" id="entity-filter-input">
+        </div>
+        <div class="entity-input-container">
+            <select name="filter-dropdown" id="filter-dropdown-customers">
+                <option value="customer-id">ID</option>
+                <option value="customer-first-name">First Name</option>
+                <option value="customer-last-name">Last Name</option>
+                <option value="customer-birth-date">Date of Birth</option>
+                <option value="customer-amount-spent">Total Amount Spent</option>
+            </select>
+        </div>
+    </aside>
+
     <div class="table-container">
         <table>
             <tr>
