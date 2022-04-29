@@ -38,6 +38,12 @@ table, th, td {
     align-self: center;
 }
 
+.update-button {
+    margin: 5px;
+    width: 70px;
+    align-self: center;
+}
+
 /* header */
 
 header { text-align: center }
