@@ -31,6 +31,10 @@ table, th, td {
     text-align: center;
 }
 
+.filter-dropdown {
+    margin-top: 15px;
+}
+
 /* insert */
 
 .entity-field-container {
