@@ -2,22 +2,40 @@ body { font-family: sans-serif }
 
 h1, h2, h3, h4 { text-align: center }
 
+p {
+    margin: 40px;
+}
+
+/* tables */
+
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
     padding: 5px;
 }
 
-table {
-    margin: 10px;
+.table-container {
+    display: flex;
+    justify-content: center;
 }
 
-/* flex */
+/* insert */
 
-.inner {
+.entity-field-container {
     display: flex;
-    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.entity-input-container {
+    align-self: center;
     margin: 5px;
+}
+
+.add-button {
+    margin: 5px;
+    width: 70px;
+    align-self: center;
 }
 
 /* header */
