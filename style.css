@@ -8,6 +8,18 @@ table, th, td {
     padding: 5px;
 }
 
+table {
+    margin: 10px;
+}
+
+/* flex */
+
+.inner {
+    display: flex;
+    align-items: flex-end;
+    margin: 5px;
+}
+
 /* header */
 
 header { text-align: center }
