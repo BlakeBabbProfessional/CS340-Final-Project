@@ -48,14 +48,11 @@ table, th, td {
     display: flex;
     justify-content: center;
     margin: 20px;
+    align-items: center;
 }
 
 .filter-text-input {
     text-align: center;
-}
-
-.filter-dropdown {
-    margin-top: 16px;
 }
 
 /* insert */
