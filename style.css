@@ -61,6 +61,7 @@ table, th, td {
     display: inline;
     justify-content: center;
     flex-direction: column;
+    margin-left: 16px;
 }
 
 .entity-input-container {
