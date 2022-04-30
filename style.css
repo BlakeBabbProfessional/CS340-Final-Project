@@ -6,6 +6,29 @@ p {
     margin: 40px;
 }
 
+/* contents */
+/*
+
+.entity-modified-container {
+    display: inline-block;
+}
+*/
+.contents {
+    display: flex;
+    /*justify-content: center;*/
+}
+
+.entity-table-container {
+    display: flex;
+    margin: auto;
+    width: 50%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    align-self: flex-start;
+    flex-direction: column;
+}
+
 /* tables */
 
 table, th, td {
@@ -34,7 +57,7 @@ table, th, td {
 /* insert */
 
 .entity-field-container {
-    display: flex;
+    display: inline;
     justify-content: center;
     flex-direction: column;
 }

@@ -20,96 +20,100 @@
 
     <h2>Insert new row</h2>
 
-    <aside class = "entity-field-container">
-             
-        <div class = "entity-input-container">
-          <label for = "entity-amount-spent-input">Amount Spent</label>
-          <div class = "entity-input-element">
-            <input type="number" id="entity-amount-spent-text" class="entity-amount-spent-input">
+    <div class = "contents">
+            <aside class = "entity-field-container">
+                    
+                <div class = "entity-input-container">
+                <label for = "entity-amount-spent-input">Amount Spent</label>
+                <div class = "entity-input-element">
+                    <input type="number" id="entity-amount-spent-text" class="entity-amount-spent-input">
+                    </div>
+                </div>
+
+                <div class = "entity-input-container">
+                    <label for = "entity-first-name-input">First Name</label>
+                    <div class = "entity-input-element">
+                    <input type="text" id="entity-first-name-text" class="entity-first-name-input">
+                    </div>
+                </div>
+
+                <div class = "entity-input-container">
+                    <label for = "entity-last-name-input">Last Name</label>
+                    <div class = "entity-input-element">
+                    <input type="text" id="entity-last-name-text" class="entity-last-name-input">
+                    </div>
+                </div>
+
+                <div class = "entity-input-container">
+                    <label for = "entity-dob-input">Date of Birth</label>
+                    <div class = "entity-input-element">
+                    <input type="text" id="entity-dob-text" class="entity-dob-input">
+                    </div>
+                </div>
+            
+            <button type = "button" class = "add-button">Add</button>
+
+                <div class = "entity-input-container">
+                    <label for = "entity-update-prompt">Update specific ID</label>
+                    <div class = "entity-update-element">
+                        <input type = "number" id = "entity-update-number" class = "entity-update-input">
+                    </div>
+                </div>
+
+            <button type = "button" class = "update-button">Update</button>
+            </aside>
+
+        <div class = "entity-table-container">
+            <h1>Customers</h1>
+
+            <aside class="filter">
+                <div class="entity-field-container">
+                    <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
+                    <input type="text" id="entity-filter-input">
+                </div>
+                <div class="entity-input-container">
+                    <select name="filter-dropdown" id="filter-dropdown-customers">
+                        <option value="customer-id">ID</option>
+                        <option value="customer-first-name">First Name</option>
+                        <option value="customer-last-name">Last Name</option>
+                        <option value="customer-birth-date">Date of Birth</option>
+                        <option value="customer-amount-spent">Total Amount Spent</option>
+                    </select>
+                </div>
+            </aside>
+
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Date of Birth</th>
+                        <th>Total amount spent</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Blake</td>
+                        <td>Babb</td>
+                        <td>12/20/2001</td>
+                        <td>$6,000,000</td>
+                        <td>
+                            <button type ="button" id="remove-customer-1" class ="remove-button">remove</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Meta</td>
+                        <td>Babb</td>
+                        <td>05/29/2004</td>
+                        <td>-$3</td>
+                        <td>
+                            <button type ="button" id="remove-customer-2" class ="remove-button">remove</button>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
-
-        <div class = "entity-input-container">
-            <label for = "entity-first-name-input">First Name</label>
-            <div class = "entity-input-element">
-              <input type="text" id="entity-first-name-text" class="entity-first-name-input">
-              </div>
-          </div>
-
-          <div class = "entity-input-container">
-            <label for = "entity-last-name-input">Last Name</label>
-            <div class = "entity-input-element">
-              <input type="text" id="entity-last-name-text" class="entity-last-name-input">
-              </div>
-          </div>
-
-          <div class = "entity-input-container">
-            <label for = "entity-dob-input">Date of Birth</label>
-            <div class = "entity-input-element">
-              <input type="text" id="entity-dob-text" class="entity-dob-input">
-              </div>
-          </div>
-    
-      <button type = "button" class = "add-button">Add</button>
-
-        <div class = "entity-input-container">
-            <label for = "entity-update-prompt">Update specific ID</label>
-            <div class = "entity-update-element">
-                <input type = "number" id = "entity-update-number" class = "entity-update-input">
-            </div>
-        </div>
-
-      <button type = "button" class = "update-button">Update</button>
-    </aside>
-
-    <h1>Customers</h1>
-
-    <aside class="filter">
-        <div class="entity-field-container">
-            <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
-            <input type="text" id="entity-filter-input">
-        </div>
-        <div class="entity-input-container">
-            <select name="filter-dropdown" id="filter-dropdown-customers">
-                <option value="customer-id">ID</option>
-                <option value="customer-first-name">First Name</option>
-                <option value="customer-last-name">Last Name</option>
-                <option value="customer-birth-date">Date of Birth</option>
-                <option value="customer-amount-spent">Total Amount Spent</option>
-            </select>
-        </div>
-    </aside>
-
-    <div class="table-container">
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Date of Birth</th>
-                <th>Total amount spent</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Blake</td>
-                <td>Babb</td>
-                <td>12/20/2001</td>
-                <td>$6,000,000</td>
-                <td>
-                    <button type ="button" id="remove-customer-1" class ="remove-button">remove</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Meta</td>
-                <td>Babb</td>
-                <td>05/29/2004</td>
-                <td>-$3</td>
-                <td>
-                    <button type ="button" id="remove-customer-2" class ="remove-button">remove</button>
-                </td>
-            </tr>
-        </table>
     </div>
 </body>
 </html>
