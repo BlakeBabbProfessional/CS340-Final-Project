@@ -18,14 +18,17 @@
     </ul>
 </nav>
 
-    <h1>Customers</h1>
 
-    <h2>Insert or Update row</h2>
 
     <div class = "contents">
-            <aside class = "entity-field-container">
-                    
-                <div class = "entity-input-container">
+
+
+
+        <aside class = "entity-field-container">
+
+            <h2>Insert or Update row</h2>
+
+            <div class = "entity-input-container">
                 <label for = "entity-amount-spent-input">Amount Spent</label>
                 <div class = "entity-input-element">
                     <input type="number" id="entity-amount-spent-text" class="entity-amount-spent-input">
@@ -67,13 +70,15 @@
 
         <div class = "entity-table-container">
 
+            <h2>View Table</h2>
+
             <aside class="filter">
                 <div class="entity-field-container">
                     <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
                     <input type="text" id="entity-filter-input">
                 </div>
                 <div class="entity-input-container">
-                    <select name="filter-dropdown" id="filter-dropdown-customers">
+                    <select name="filter-dropdown" id="filter-dropdown-customers" class="filter-dropdown">
                         <option value="customer-id">ID</option>
                         <option value="customer-first-name">First Name</option>
                         <option value="customer-last-name">Last Name</option>
@@ -82,8 +87,6 @@
                     </select>
                 </div>
             </aside>
-            
-    <h2>View Table</h2>
             <div class="table-container">
                 <table>
                     <tr>
