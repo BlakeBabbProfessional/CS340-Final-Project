@@ -54,6 +54,10 @@ table, th, td {
     text-align: center;
 }
 
+.filter-dropdown {
+    margin-top: 16px;
+}
+
 /* insert */
 
 .entity-field-container {

@@ -18,7 +18,9 @@
         </ul>
     </nav>
 
-    <h2>Insert new row</h2>
+    <h1>Suppliers</h1>
+
+    <h2>Insert or Update row</h2>
 
     <aside class = "entity-field-container">
              
@@ -32,7 +34,21 @@
       <button type = "button" class = "add-button">Add</button>
     </aside>
 
-    <h1>Suppliers</h1>
+    <h2>View Table</h2>
+
+    <aside class="filter">
+        <div class="entity-field-container">
+            <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
+            <input type="text" id="entity-filter-input">
+        </div>
+        <div class="entity-input-container">
+            <select name="filter-dropdown" id="filter-dropdown-goods" class="filter-dropdown">
+                <option value="supplier-id">ID</option>
+                <option value="supplier-name">Name</option>
+            </select>
+        </div>
+    </aside>
+
     <div class="table-container">
         <table>
             <tr>
