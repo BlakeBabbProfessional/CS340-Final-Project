@@ -6,41 +6,41 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 class="title">Fresh Goods database</h1>
-    <nav class="navbar">
-        <ul class="navlist">
-            <li class="navitem"><a href="index.html">Home</a></li>
-            <li class="navitem"><a href="customer.html">Customers</a></li>
-            <li class="navitem"><a href="goods.html">Goods</a></li>
-            <li class="navitem"><a href="orders.html">Orders</a></li>
-            <li class="navitem"><a href="suppliers.html">Suppliers</a></li>
-            <li class="navitem"><a href="suppliers-goods.html">Suppliers-Goods</a></li>
-        </ul>
-    </nav>
+<h1 class="title">Fresh Goods database</h1>
+<nav class="navbar">
+    <ul class="navlist">
+        <li class="navitem"><a href="index.html">Home</a></li>
+        <li class="navitem"><a href="customer.html">Customers</a></li>
+        <li class="navitem"><a href="goods.html">Goods</a></li>
+        <li class="navitem"><a href="orders.html">Orders</a></li>
+        <li class="navitem"><a href="suppliers.html">Suppliers</a></li>
+        <li class="navitem"><a href="suppliers-goods.html">Suppliers-Goods</a></li>
+    </ul>
+</nav>
 
-    <h1>Orders</h1>
+<h1>Orders</h1>
 
-    <div class = "contents">
+<div class = "contents">
 
     <aside class = "entity-field-container">
 
         <h2>Insert or Update row</h2>
 
         <div class = "entity-input-container">
-          <label for = "entity-purchase-date-input">Purchase Date</label>
-          <div class = "entity-input-element">
-            <input type="text" id="entity-purchase-date-text" class="entity-purchase-date-input">
+            <label for = "entity-purchase-date-input">Purchase Date</label>
+            <div class = "entity-input-element">
+                <input type="text" id="entity-purchase-date-text" class="entity-purchase-date-input">
             </div>
         </div>
 
         <div class = "entity-input-container">
             <label for = "entity-customer-id-input">Customer ID</label>
             <div class = "entity-input-element">
-              <input type="text" id="entity-customer-id-text" class="entity-customer-id-input">
-              </div>
-          </div>
-    
-      <button type = "button" class = "add-button">Add</button>
+                <input type="text" id="entity-customer-id-text" class="entity-customer-id-input">
+            </div>
+        </div>
+
+        <button type = "button" class = "add-button">Add</button>
 
         <div class = "entity-input-container">
             <label for = "entity-update-prompt">Update specific ID</label>
@@ -54,39 +54,39 @@
 
     <div class = "entity-table-container">
 
-    <aside class="filter">
-        <div class="entity-field-container">
-            <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
-            <input type="text" id="entity-filter-input">
-        </div>
-        <div class="entity-input-container">
-            <select name="filter-dropdown" id="filter-dropdown-goods" class="filter-dropdown">
-                <option value="order-id">ID</option>
-                <option value="order-date">Date</option>
-                <option value="order-customer-id">Customer ID</option>
-            </select>
-        </div>
-    </aside>
+        <aside class="filter">
+            <div class="entity-field-container">
+                <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
+                <input type="text" id="entity-filter-input">
+            </div>
+            <div class="entity-input-container">
+                <select name="filter-dropdown" id="filter-dropdown-goods" class="filter-dropdown">
+                    <option value="order-id">ID</option>
+                    <option value="order-date">Date</option>
+                    <option value="order-customer-id">Customer ID</option>
+                </select>
+            </div>
+        </aside>
 
-    <div class="table-container">
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Customer ID</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>04/28/2022</td>
-                <td>1</td>
-                <td>
-                    <button type ="button" id="remove-orders-1" class ="remove-button">remove</button>
-                </td>
-            </tr>
-        </table>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Customer ID</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>04/28/2022</td>
+                    <td>1</td>
+                    <td>
+                        <button type ="button" id="remove-orders-1" class ="remove-button">remove</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-    </div>
-    </div>
+</div>
 
 </body>
 </html>

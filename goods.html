@@ -6,61 +6,61 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 class="title">Fresh Goods database</h1>
-        <nav class="navbar">
-        <ul class="navlist">
-            <li class="navitem"><a href="index.html">Home</a></li>
-            <li class="navitem"><a href="customer.html">Customers</a></li>
-            <li class="navitem"><a href="goods.html">Goods</a></li>
-            <li class="navitem"><a href="orders.html">Orders</a></li>
-            <li class="navitem"><a href="suppliers.html">Suppliers</a></li>
-            <li class="navitem"><a href="suppliers-goods.html">Suppliers-Goods</a></li>
-        </ul>
-    </nav>
+<h1 class="title">Fresh Goods database</h1>
+<nav class="navbar">
+    <ul class="navlist">
+        <li class="navitem"><a href="index.html">Home</a></li>
+        <li class="navitem"><a href="customer.html">Customers</a></li>
+        <li class="navitem"><a href="goods.html">Goods</a></li>
+        <li class="navitem"><a href="orders.html">Orders</a></li>
+        <li class="navitem"><a href="suppliers.html">Suppliers</a></li>
+        <li class="navitem"><a href="suppliers-goods.html">Suppliers-Goods</a></li>
+    </ul>
+</nav>
 
-    <h1>Goods</h1>
+<h1>Goods</h1>
 
-    <div class = "contents">
+<div class = "contents">
     <aside class = "entity-field-container">
 
         <h2>Insert or Update row</h2>
 
         <div class = "entity-input-container">
-          <label for = "entity-price-input">Price</label>
-          <div class = "entity-input-element">
-            <input type="number" id="entity-price-text" class="entity-price-input">
+            <label for = "entity-price-input">Price</label>
+            <div class = "entity-input-element">
+                <input type="number" id="entity-price-text" class="entity-price-input">
             </div>
         </div>
 
         <div class = "entity-input-container">
             <label for = "entity-location-input">Location</label>
             <div class = "entity-input-element">
-              <input type="text" id="entity-location-text" class="entity-location-input">
-              </div>
-          </div>
+                <input type="text" id="entity-location-text" class="entity-location-input">
+            </div>
+        </div>
 
-          <div class = "entity-input-container">
+        <div class = "entity-input-container">
             <label for = "entity-expiration-date-input">Expiration Date</label>
             <div class = "entity-input-element">
-              <input type="text" id="entity-expiration-date-text" class="entity-expiration-date-input">
-              </div>
-          </div>
+                <input type="text" id="entity-expiration-date-text" class="entity-expiration-date-input">
+            </div>
+        </div>
 
-          <div class = "entity-input-container">
+        <div class = "entity-input-container">
             <label for = "entity-supplier-id-input">Supplier ID</label>
             <div class = "entity-input-element">
-              <input type="text" id="entity-supplier-id-text" class="entity-supplier-id-input">
-              </div>
-          </div>
+                <input type="text" id="entity-supplier-id-text" class="entity-supplier-id-input">
+            </div>
+        </div>
 
-          <div class = "entity-input-container">
+        <div class = "entity-input-container">
             <label for = "entity-order-id-input">Order ID</label>
             <div class = "entity-input-element">
-              <input type="text" id="entity-order-id-text" class="entity-order-id-input">
-              </div>
-          </div>
-    
-      <button type = "button" class = "add-button">Add</button>
+                <input type="text" id="entity-order-id-text" class="entity-order-id-input">
+            </div>
+        </div>
+
+        <button type = "button" class = "add-button">Add</button>
 
         <div class = "entity-input-container">
             <label for = "entity-update-prompt">Update specific ID</label>
@@ -74,47 +74,47 @@
 
     <div class = "entity-table-container">
 
-    <aside class="filter">
-        <div class="entity-field-container">
-            <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
-            <input type="text" id="entity-filter-input">
-        </div>
-        <div class="entity-input-container">
-            <select name="filter-dropdown" id="filter-dropdown-goods" class="filter-dropdown">
-                <option value="good-id">ID</option>
-                <option value="good-location">Location</option>
-                <option value="good-expire-date">Expiration Date</option>
-                <option value="good-supplier-id">Supplier ID</option>
-                <option value="good-order-id">Order ID</option>
-            </select>
-        </div>
-    </aside>
+        <aside class="filter">
+            <div class="entity-field-container">
+                <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
+                <input type="text" id="entity-filter-input">
+            </div>
+            <div class="entity-input-container">
+                <select name="filter-dropdown" id="filter-dropdown-goods" class="filter-dropdown">
+                    <option value="good-id">ID</option>
+                    <option value="good-location">Location</option>
+                    <option value="good-expire-date">Expiration Date</option>
+                    <option value="good-supplier-id">Supplier ID</option>
+                    <option value="good-order-id">Order ID</option>
+                </select>
+            </div>
+        </aside>
 
-    <div class="table-container">
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Price</th>
-                <th>Location</th>
-                <th>Expiration Date</th>
-                <th>Supplier ID</th>
-                <th>Order ID</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>$2</td>
-                <td>Aisle 4, row 3</td>
-                <td>07/22/22</td>
-                <td>1</td>
-                <td>1</td>
-                <td>
-                    <button type ="button" id="remove-goods-1" class ="remove-button">remove</button>
-                </td>
-            </tr>
-        </table>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Price</th>
+                    <th>Location</th>
+                    <th>Expiration Date</th>
+                    <th>Supplier ID</th>
+                    <th>Order ID</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>$2</td>
+                    <td>Aisle 4, row 3</td>
+                    <td>07/22/22</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>
+                        <button type ="button" id="remove-goods-1" class ="remove-button">remove</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-    </div>
-    </div>
+</div>
 
 </body>
 </html>

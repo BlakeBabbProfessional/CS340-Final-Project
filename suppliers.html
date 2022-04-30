@@ -6,75 +6,75 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 class="title">Fresh Goods database</h1>
-    <nav class="navbar">
-        <ul class="navlist">
-            <li class="navitem"><a href="index.html">Home</a></li>
-            <li class="navitem"><a href="customer.html">Customers</a></li>
-            <li class="navitem"><a href="goods.html">Goods</a></li>
-            <li class="navitem"><a href="orders.html">Orders</a></li>
-            <li class="navitem"><a href="suppliers.html">Suppliers</a></li>
-            <li class="navitem"><a href="suppliers-goods.html">Suppliers-Goods</a></li>
-        </ul>
-    </nav>
+<h1 class="title">Fresh Goods database</h1>
+<nav class="navbar">
+    <ul class="navlist">
+        <li class="navitem"><a href="index.html">Home</a></li>
+        <li class="navitem"><a href="customer.html">Customers</a></li>
+        <li class="navitem"><a href="goods.html">Goods</a></li>
+        <li class="navitem"><a href="orders.html">Orders</a></li>
+        <li class="navitem"><a href="suppliers.html">Suppliers</a></li>
+        <li class="navitem"><a href="suppliers-goods.html">Suppliers-Goods</a></li>
+    </ul>
+</nav>
 
-    <h1>Suppliers</h1>
-    <div class = "contents">
+<h1>Suppliers</h1>
+<div class = "contents">
 
     <aside class = "entity-field-container">
 
         <h2>Insert or Update row</h2>
 
         <div class = "entity-input-container">
-          <label for = "entity-supplier-name-date-input">Supplier Name</label>
-          <div class = "entity-input-element">
-            <input type="text" id="entity-supplier-name-text" class="entity-supplier-name-input">
+            <label for = "entity-supplier-name-date-input">Supplier Name</label>
+            <div class = "entity-input-element">
+                <input type="text" id="entity-supplier-name-text" class="entity-supplier-name-input">
             </div>
         </div>
-    
-      <button type = "button" class = "add-button">Add</button>
-    
 
-    <div class = "entity-input-container">
-        <label for = "entity-update-prompt">Update specific ID</label>
-        <div class = "entity-update-element">
-            <input type = "number" id = "entity-update-number" class = "entity-update-input">
+        <button type = "button" class = "add-button">Add</button>
+
+
+        <div class = "entity-input-container">
+            <label for = "entity-update-prompt">Update specific ID</label>
+            <div class = "entity-update-element">
+                <input type = "number" id = "entity-update-number" class = "entity-update-input">
+            </div>
         </div>
-    </div>
 
-    <button type = "button" class = "update-button">Update</button>
+        <button type = "button" class = "update-button">Update</button>
     </aside>
     <div class = "entity-table-container">
 
-    <aside class="filter">
-        <div class="entity-field-container">
-            <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
-            <input type="text" id="entity-filter-input">
-        </div>
-        <div class="entity-input-container">
-            <select name="filter-dropdown" id="filter-dropdown-goods" class="filter-dropdown">
-                <option value="supplier-id">ID</option>
-                <option value="supplier-name">Name</option>
-            </select>
-        </div>
-    </aside>
+        <aside class="filter">
+            <div class="entity-field-container">
+                <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
+                <input type="text" id="entity-filter-input">
+            </div>
+            <div class="entity-input-container">
+                <select name="filter-dropdown" id="filter-dropdown-goods" class="filter-dropdown">
+                    <option value="supplier-id">ID</option>
+                    <option value="supplier-name">Name</option>
+                </select>
+            </div>
+        </aside>
 
-    <div class="table-container">
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Fruity Farms</td>
-                <td>
-                    <button type ="button" id="remove-suppliers-1" class ="remove-button">remove</button>
-                </td>
-            </tr>
-        </table>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Fruity Farms</td>
+                    <td>
+                        <button type ="button" id="remove-suppliers-1" class ="remove-button">remove</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-    </div>
-    </div>
+</div>
 </body>
 </html>

@@ -6,80 +6,80 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 class="title">Fresh Goods database</h1>
-    <nav class="navbar">
-        <ul class="navlist">
-            <li class="navitem"><a href="index.html">Home</a></li>
-            <li class="navitem"><a href="customer.html">Customers</a></li>
-            <li class="navitem"><a href="goods.html">Goods</a></li>
-            <li class="navitem"><a href="orders.html">Orders</a></li>
-            <li class="navitem"><a href="suppliers.html">Suppliers</a></li>
-            <li class="navitem"><a href="suppliers-goods.html">Suppliers-Goods</a></li>
-        </ul>
-    </nav>
+<h1 class="title">Fresh Goods database</h1>
+<nav class="navbar">
+    <ul class="navlist">
+        <li class="navitem"><a href="index.html">Home</a></li>
+        <li class="navitem"><a href="customer.html">Customers</a></li>
+        <li class="navitem"><a href="goods.html">Goods</a></li>
+        <li class="navitem"><a href="orders.html">Orders</a></li>
+        <li class="navitem"><a href="suppliers.html">Suppliers</a></li>
+        <li class="navitem"><a href="suppliers-goods.html">Suppliers-Goods</a></li>
+    </ul>
+</nav>
 
-    <h1>Suppliers-Goods</h1>
-    <div class = "contents">
+<h1>Suppliers-Goods</h1>
+<div class = "contents">
     <aside class = "entity-field-container">
-             
+
         <h2>Insert or Update row</h2>
 
         <div class = "entity-input-container">
-          <label for = "entity-supplier-id-input">Supplier ID</label>
-          <div class = "entity-input-element">
-            <input type="number" id="entity-supplier-id-text" class="entity-supplier-id-input">
+            <label for = "entity-supplier-id-input">Supplier ID</label>
+            <div class = "entity-input-element">
+                <input type="number" id="entity-supplier-id-text" class="entity-supplier-id-input">
             </div>
         </div>
 
         <div class = "entity-input-container">
             <label for = "entity-item-id-input">Item ID</label>
             <div class = "entity-input-element">
-              <input type="text" id="entity-item-id-text" class="entity-item-id-input">
-              </div>
-          </div>
-    
-      <button type = "button" class = "add-button">Add</button>
-
-    <div class = "entity-input-container">
-        <label for = "entity-update-prompt">Update specific ID</label>
-        <div class = "entity-update-element">
-            <input type = "number" id = "entity-update-number" class = "entity-update-input">
+                <input type="text" id="entity-item-id-text" class="entity-item-id-input">
+            </div>
         </div>
-    </div>
 
-    <button type = "button" class = "update-button">Update</button>
+        <button type = "button" class = "add-button">Add</button>
+
+        <div class = "entity-input-container">
+            <label for = "entity-update-prompt">Update specific ID</label>
+            <div class = "entity-update-element">
+                <input type = "number" id = "entity-update-number" class = "entity-update-input">
+            </div>
+        </div>
+
+        <button type = "button" class = "update-button">Update</button>
     </aside>
 
     <div class = "entity-table-container">
-    <aside class="filter">
-        <div class="entity-field-container">
-            <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
-            <input type="text" id="entity-filter-input">
-        </div>
-        <div class="entity-input-container">
-            <select name="filter-dropdown" id="filter-dropdown-goods" class="filter-dropdown">
-                <option value="suppliers-goods-good-id">Good ID</option>
-                <option value="suppliers-goods-supplier-id">Supplier ID</option>
-            </select>
-        </div>
-    </aside>
+        <aside class="filter">
+            <div class="entity-field-container">
+                <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
+                <input type="text" id="entity-filter-input">
+            </div>
+            <div class="entity-input-container">
+                <select name="filter-dropdown" id="filter-dropdown-goods" class="filter-dropdown">
+                    <option value="suppliers-goods-good-id">Good ID</option>
+                    <option value="suppliers-goods-supplier-id">Supplier ID</option>
+                </select>
+            </div>
+        </aside>
 
-    <div class="table-container">
-    <table>
-            <tr>
-                <th>Good ID</th>
-                <th>Supplier ID</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>1</td>
-                <td>
-                    <button type ="button" id="remove-suppliers-goods-1" class ="remove-button">remove</button>
-                </td>
-            </tr>
-        </table>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Good ID</th>
+                    <th>Supplier ID</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>
+                        <button type ="button" id="remove-suppliers-goods-1" class ="remove-button">remove</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-</div>
 </div>
 </body>
 </html>
