@@ -35,7 +35,7 @@
 
             <!-- insert and update -->
 
-            <h2>Insert or Update row</h2>
+            <h2>Insert row</h2>
 
             <div class = "entity-input-container">
                 <label for = "entity-price-input">Price</label>
@@ -67,10 +67,40 @@
 
             <button type = "button" class = "add-button">Add</button>
 
+            <h2>Update row</h2>
+
             <div class = "entity-input-container">
-                <label for = "entity-update-prompt">Update specific ID</label>
+                <label for = "entity-update-prompt">Enter ID to update</label>
                 <div class = "entity-update-element">
                     <input type = "number" id = "entity-update-number" class = "entity-update-input">
+                </div>
+            </div>
+
+            <div class = "entity-input-container">
+                <label for = "entity-price-input">New Price</label>
+                <div class = "entity-input-element">
+                    <input type="number" id="entity-price-text" class="entity-price-input">
+                </div>
+            </div>
+
+            <div class = "entity-input-container">
+                <label for = "entity-location-input">New Location</label>
+                <div class = "entity-input-element">
+                    <input type="text" id="entity-location-text" class="entity-location-input">
+                </div>
+            </div>
+
+            <div class = "entity-input-container">
+                <label for = "entity-expiration-date-input">New Expiration Date</label>
+                <div class = "entity-input-element">
+                    <input type="text" id="entity-expiration-date-text" class="entity-expiration-date-input">
+                </div>
+            </div>
+
+            <div class = "entity-input-container">
+                <label for = "entity-order-id-input">New Order ID</label>
+                <div class = "entity-input-element">
+                    <input type="text" id="entity-order-id-text" class="entity-order-id-input">
                 </div>
             </div>
 

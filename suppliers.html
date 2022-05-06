@@ -35,7 +35,7 @@
 
             <!-- insert & update -->
 
-            <h2>Insert or Update row</h2>
+            <h2>Insert row</h2>
 
             <div class = "entity-input-container">
                 <label for = "entity-supplier-name-date-input">Supplier Name</label>
@@ -46,11 +46,19 @@
 
             <button type = "button" class = "add-button">Add</button>
 
+            <h2>Update row</h2>
 
             <div class = "entity-input-container">
-                <label for = "entity-update-prompt">Update specific ID</label>
+                <label for = "entity-update-prompt">Enter ID to update</label>
                 <div class = "entity-update-element">
                     <input type = "number" id = "entity-update-number" class = "entity-update-input">
+                </div>
+            </div>
+
+            <div class = "entity-input-container">
+                <label for = "entity-supplier-name-date-input">New Supplier Name</label>
+                <div class = "entity-input-element">
+                    <input type="text" id="entity-supplier-name-text" class="entity-supplier-name-input">
                 </div>
             </div>
 
