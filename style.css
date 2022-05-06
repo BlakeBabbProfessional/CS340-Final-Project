@@ -115,7 +115,7 @@ table, th, td {
 /* insert */
 
 .entity-field-container {
-    display: inline;
+    display: flex;
     justify-content: center;
     flex-direction: column;
     margin-left: 16px;
@@ -124,7 +124,7 @@ table, th, td {
 }
 
 .entity-input-container {
-    align-self: center;
+    align-self: left;
     margin: 5px;
 
 }
