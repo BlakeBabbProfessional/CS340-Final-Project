@@ -9,108 +9,111 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="image-container">
-    <img src="header.png" alt="Fresh Goods" width="1200">
-</div>
-<h1 class="title">Company Database</h1>
-<nav class="navbar">
-    <ul class="navlist">
-        <li class="navitem"><a href="index.html">Home</a></li>
-        <li class="navitem"><a href="customer.html">Customers</a></li>
-        <li class="navitem"><a href="goods.html">Goods</a></li>
-        <li class="navitem"><a href="orders.html">Orders</a></li>
-        <li class="navitem"><a href="suppliers.html">Suppliers</a></li>
-        <li class="navitem"><a href="suppliers-goods.html">Suppliers-Goods</a></li>
-    </ul>
-</nav>
+<div class = "background-wrap">
+    <div class="image-container">
+        <img src="header.png" alt="Fresh Goods" width="1200">
+    </div>
+    <div class = "title-tabs-container">
+        <h1 class="title">Company Database</h1>
+        <nav class="navbar">
+            <ul class="navlist">
+                <li class="navitem"><a href="index.html">Home</a></li>
+                <li class="navitem"><a href="customer.html">Manage Customers</a></li>
+                <li class="navitem"><a href="goods.html">Manage Goods</a></li>
+                <li class="navitem"><a href="orders.html">Manage Orders</a></li>
+                <li class="navitem"><a href="suppliers.html">Manage Suppliers</a></li>
+                <li class="navitem"><a href="suppliers-goods.html">Manage Suppliers-Goods</a></li>
+            </ul>
+        </nav>
+    </div>
 
-<h1>Goods</h1>
+    <h1 class="table-header">Goods</h1>
 
-<div class = "contents">
-    <aside class = "entity-field-container">
+    <div class = "contents">
+        <aside class = "entity-field-container">
 
-        <h2>Insert or Update row</h2>
+            <h2>Insert or Update row</h2>
 
-        <div class = "entity-input-container">
-            <label for = "entity-price-input">Price</label>
-            <div class = "entity-input-element">
-                <input type="number" id="entity-price-text" class="entity-price-input">
+            <div class = "entity-input-container">
+                <label for = "entity-price-input">Price</label>
+                <div class = "entity-input-element">
+                    <input type="number" id="entity-price-text" class="entity-price-input">
+                </div>
             </div>
-        </div>
 
-        <div class = "entity-input-container">
-            <label for = "entity-location-input">Location</label>
-            <div class = "entity-input-element">
-                <input type="text" id="entity-location-text" class="entity-location-input">
+            <div class = "entity-input-container">
+                <label for = "entity-location-input">Location</label>
+                <div class = "entity-input-element">
+                    <input type="text" id="entity-location-text" class="entity-location-input">
+                </div>
             </div>
-        </div>
 
-        <div class = "entity-input-container">
-            <label for = "entity-expiration-date-input">Expiration Date</label>
-            <div class = "entity-input-element">
-                <input type="text" id="entity-expiration-date-text" class="entity-expiration-date-input">
+            <div class = "entity-input-container">
+                <label for = "entity-expiration-date-input">Expiration Date</label>
+                <div class = "entity-input-element">
+                    <input type="text" id="entity-expiration-date-text" class="entity-expiration-date-input">
+                </div>
             </div>
-        </div>
 
-        <div class = "entity-input-container">
-            <label for = "entity-order-id-input">Order ID</label>
-            <div class = "entity-input-element">
-                <input type="text" id="entity-order-id-text" class="entity-order-id-input">
+            <div class = "entity-input-container">
+                <label for = "entity-order-id-input">Order ID</label>
+                <div class = "entity-input-element">
+                    <input type="text" id="entity-order-id-text" class="entity-order-id-input">
+                </div>
             </div>
-        </div>
 
-        <button type = "button" class = "add-button">Add</button>
+            <button type = "button" class = "add-button">Add</button>
 
-        <div class = "entity-input-container">
-            <label for = "entity-update-prompt">Update specific ID</label>
-            <div class = "entity-update-element">
-                <input type = "number" id = "entity-update-number" class = "entity-update-input">
+            <div class = "entity-input-container">
+                <label for = "entity-update-prompt">Update specific ID</label>
+                <div class = "entity-update-element">
+                    <input type = "number" id = "entity-update-number" class = "entity-update-input">
+                </div>
             </div>
-        </div>
 
-        <button type = "button" class = "update-button">Update</button>
-    </aside>
-
-    <div class = "entity-table-container">
-
-        <aside class="filter">
-            <div class="entity-field-container">
-                <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
-                <input type="text" id="entity-filter-input">
-            </div>
-            <div class="entity-input-container">
-                <select name="filter-dropdown" id="filter-dropdown-goods" class="filter-dropdown">
-                    <option value="good-id">ID</option>
-                    <option value="good-location">Location</option>
-                    <option value="good-expire-date">Expiration Date</option>
-                    <option value="good-order-id">Order ID</option>
-                </select>
-            </div>
+            <button type = "button" class = "update-button">Update</button>
         </aside>
 
-        <div class="table-container">
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Price</th>
-                    <th>Location</th>
-                    <th>Expiration Date</th>
-                    <th>Order ID</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>$2</td>
-                    <td>Aisle 4, row 3</td>
-                    <td>07/22/22</td>
-                    <td>1</td>
-                    <td>
-                        <button type ="button" id="remove-goods-1" class ="remove-button">remove</button>
-                    </td>
-                </tr>
-            </table>
+        <div class = "entity-table-container">
+
+            <aside class="filter">
+                <div class="entity-field-container">
+                    <label for="entity-filter-input" class="filter-text-input">Match Filter</label>
+                    <input type="text" id="entity-filter-input">
+                </div>
+                <div class="entity-input-container">
+                    <select name="filter-dropdown" id="filter-dropdown-goods" class="filter-dropdown">
+                        <option value="good-id">ID</option>
+                        <option value="good-location">Location</option>
+                        <option value="good-expire-date">Expiration Date</option>
+                        <option value="good-order-id">Order ID</option>
+                    </select>
+                </div>
+            </aside>
+
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Price</th>
+                        <th>Location</th>
+                        <th>Expiration Date</th>
+                        <th>Order ID</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>$2</td>
+                        <td>Aisle 4, row 3</td>
+                        <td>07/22/22</td>
+                        <td>1</td>
+                        <td>
+                            <button type ="button" id="remove-goods-1" class ="remove-button">remove</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>
