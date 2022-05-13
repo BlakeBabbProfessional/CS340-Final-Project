@@ -7,20 +7,20 @@ drop table if exists SuppliersGoods;
 
 
 create table Customers (
-    customerId int(11) auto_increment,
+    customerID int(11) auto_increment,
     customerFirstName varchar(35) not null,
     customerLastName varchar(35) not null,
     customerDateOfBirth date not null,
     customerTotalCost decimal(38) not null,
-    primary key (customerId)
+    primary key (customerID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table Orders (
-    orderId int(11) auto_increment not null,
+    orderID int(11) auto_increment not null,
     orderPurchaseDate datetime not null,
-    customerId int(11),
+    customerID int(11),
     primary key (orderId),
-    foreign key (customerId) references Customers (customerId)
+    foreign key (customerID) references Customers (customerID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Goods (
