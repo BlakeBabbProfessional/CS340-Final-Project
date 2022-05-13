@@ -5,22 +5,21 @@ drop table if exists Goods;
 drop table if exists Orders;
 drop table if exists Suppliers_Goods;
 
-
 create table Customers (
-    customerId int(11) auto_increment,
-    customerFirstName varchar(35) not null,
-    customerLastName varchar(35) not null,
-    customerDateOfBirth date not null,
-    customerTotalCost decimal(38) not null,
-    primary key (customerId)
+    `customerId` int(11) auto_increment,
+    `customerFirstName` varchar(35) not null,
+    `customerLastName` varchar(35) not null,
+    `customerDateOfBirth` date not null,
+    `customerTotalCost` decimal(38) not null,
+    primary key (`customerId`)
 );
 
-create table Orders (
-    orderId int(11) auto_increment not null,
-    orderPurchaseDate datetime not null,
-    customerId int(11),
-    primary key (orderId),
-    foreign key (customerId) references Customers (customerId)
+create table `Orders` (
+    `orderId` int(11) auto_increment not null,
+    `orderPurchaseDate` datetime not null,
+    `customerId` int(11),
+    primary key (`orderId`),
+    foreign key (`customerId`) references `Customers` (`customerId`)
 );
 
 CREATE TABLE `Goods` (
@@ -40,10 +39,11 @@ CREATE TABLE `Suppliers` (
     PRIMARY KEY (`supplierID`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE `SupplierGoods` (
+CREATE TABLE `SupplierGoods` (
     `itemID` int(11) NOT NULL,
     `supplierID` int(11) NOT NULL,
-    PRIMARY KEY (`itemID`, `supplierID`),
+    PRIMARY KEY (`itemID`),
+    PRIMARY KEY (`supplierID`),
     FOREIGN KEY (`itemID`) REFERENCES `Goods` (`itemID`),
     FOREIGN KEY (`supplierID`) REFERENCES `Suppliers` (`supplierID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
