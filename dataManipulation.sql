@@ -8,12 +8,29 @@ SELECT customerTotalCost FROM Customers;
 
 DELETE FROM Customers WHERE customerID = :customerIDInput;
 
+INSERT INTO Customers (customerFirstName, customerLastName, customerDateOfBirth, customerTotalCost)
+VALUES (:firstNameInput, :lastNameInput, :dateOfBirthInput, :totalCostInput);
+
+UPDATE Customers
+SET customerFirstName = :firstNameInput,
+    customerLastName = :lastNameInput,
+    customerDateOfBirth = :dateOfBirthInput,
+    customerTotalCost = :totalCostInput
+WHERE customerID = :idInput;
+
 -- Suppliers
 SELECT * FROM Suppliers;
 SELECT supplierID FROM Suppliers;
 SELECT supplierName FROM Suppliers;
 
 DELETE FROM Suppliers WHERE supplierID = :supplierIDInput;
+
+INSERT INTO Suppliers (supplierName)
+VALUES (:supplierNameInput);
+
+UPDATE Suppliers
+SET supplierName = :supplierNameInput
+WHERE supplierID = :idInput;
 
 -- Goods
 SELECT * FROM Goods;
@@ -26,6 +43,16 @@ SELECT orderID FROM Goods;
 
 DELETE FROM Goods WHERE itemID = :itemIDInput;
 
+INSERT INTO Goods (goodPrice, goodLocationInStore, goodExpirationDate)
+VALUES (:priceInput, :locationInStoreInput, :expirationDateInput);
+
+UPDATE Goods
+SET goodPrice = :priceInput,
+    goodLocationInStore = :locationInStoreInput,
+    goodExpirationDate = :expirationDateInput
+WHERE goodID = :idInput;
+
+
 -- Orders
 SELECT * FROM Orders;
 SELECT orderID FROM Orders;
@@ -34,48 +61,16 @@ SELECT customerID FROM Orders;
 
 DELETE FROM Orders WHERE orderID = :itemIDInput;
 
+INSERT INTO Orders (orderPurchaseDate)
+VALUES (:purchaseDateInput);
+
+UPDATE Orders
+SET orderPurcaseDate = :purchaseDateInput
+WHERE orderID = :idInput;
+
 -- SupplierGoods
 SELECT * FROM SupplierGoods;
 SELECT itemID FROM SupplierGoods;
 SELECT supplierID FROM SupplierGoods;
 
 DELETE FROM SupplierGoods WHERE itemID = :itemIDInput AND supplierID = :supplierID;
-
--- Inserting
-
-INSERT INTO Customers (customerFirstName, customerLastName, customerDateOfBirth, customerTotalCost)
-    VALUES (:firstNameInput, :lastNameInput, :dateOfBirthInput, :totalCostInput);
-
-INSERT INTO Goods (goodPrice, goodLocationInStore, goodExpirationDate)
-    VALUES (:priceInput, :locationInStoreInput, :expirationDateInput);
-
-INSERT INTO Orders (orderPurchaseDate)
-    VALUES (:purchaseDateInput);
-
-INSERT INTO Suppliers (supplierName)
-    VALUES (:supplierNameInput);
-
--- Update
-
-UPDATE Customers
-    SET customerFirstName = :firstNameInput,
-        customerLastName = :lastNameInput,
-        customerDateOfBirth = :dateOfBirthInput,
-        customerTotalCost = :totalCostInput
-    WHERE customerID = :idInput;
-
-UPDATE Goods
-    SET goodPrice = :priceInput,
-        goodLocationInStore = :locationInStoreInput,
-        goodExpirationDate = :expirationDateInput
-    WHERE goodID = :idInput;
-
-UPDATE Orders
-    SET orderPurcaseDate = :purchaseDateInput
-    WHERE orderID = :idInput;
-
-UPDATE Suppliers
-    SET supplierName = :supplierNameInput
-    WHERE supplierID = :idInput;
-
--- No update for Suppliers-Goods because it's all primary keys.
