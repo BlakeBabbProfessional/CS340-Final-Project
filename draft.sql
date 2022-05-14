@@ -54,8 +54,22 @@ CREATE TABLE SupplierGoods (
 -- Insert sample data
 
 INSERT INTO Customers (CUSTOMERFIRSTNAME, CUSTOMERLASTNAME, CUSTOMERDATEOFBIRTH, CUSTOMERTOTALCOST)
-VALUES ('Joe', 'Schmoe', '1983/8/23', 12.39);
+    VALUES ('Joe', 'Schmoe', '1983/8/23', 12.39);
 INSERT INTO Customers (CUSTOMERFIRSTNAME, CUSTOMERLASTNAME, CUSTOMERDATEOFBIRTH, CUSTOMERTOTALCOST)
-VALUES ('Sarah', 'Smith', '1999/12/3', 99.99);
+    VALUES ('Sarah', 'Smith', '1999/12/3', 99.99);
 INSERT INTO Customers (CUSTOMERFIRSTNAME, CUSTOMERLASTNAME, CUSTOMERDATEOFBIRTH, CUSTOMERTOTALCOST)
-VALUES ('Bo', 'Schmoe', '2007/3/12', 12.39);
+    VALUES ('Bo', 'Schmoe', '2007/3/12', 12.39);
+
+INSERT INTO Suppliers (supplierName)
+    VALUES ('Fruity Farms');
+INSERT INTO Suppliers (supplierName)
+    VALUES ('Mack\'s Milk');
+INSERT INTO Suppliers (supplierName)
+    VALUES ('Super Soy');
+
+INSERT INTO SupplierGoods (itemID, supplierID)
+    VALUES (1, 3);
+INSERT INTO SupplierGoods (itemID, supplierID)
+    VALUES (2, 1);
+INSERT INTO SupplierGoods (itemID, supplierID)
+    VALUES (3, 2);
