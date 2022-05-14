@@ -1,51 +1,51 @@
--- Clear way for new tables
+-- Clear way for new TABLEs
 SET FOREIGN_KEY_CHECKS = 0;
-drop table if exists Customers;
-drop table if exists Suppliers;
-drop table if exists Goods;
-drop table if exists Orders;
-drop table if exists SupplierGoods;
+DROP TABLE IF EXISTS Customers;
+DROP TABLE IF EXISTS Suppliers;
+DROP TABLE IF EXISTS Goods;
+DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS SupplierGoods;
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- Table creation
 
-create table Customers (
-    customerID int(11) auto_increment,
-    customerFirstName varchar(35) not null,
-    customerLastName varchar(35) not null,
-    customerDateOfBirth date not null,
-    customerTotalCost decimal(8, 2) not null,
-    primary key (customerID)
+CREATE TABLE Customers (
+    customerID INT(11) AUTO_INCREMENT,
+    customerFirstName VARCHAR(35) NOT NULL,
+    customerLastName VARCHAR(35) NOT NULL,
+    customerDateOfBirth DATE NOT NULL,
+    customerTotalCost DECIMAL(8, 2) NOT NULL,
+    PRIMARY KEY (customerID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table Orders (
-    orderID int(11) auto_increment not null,
-    orderPurchaseDate datetime not null,
-    customerID int(11),
-    primary key (orderId),
-    foreign key (customerID) references Customers (customerID)
+CREATE TABLE Orders (
+    orderID INT(11) AUTO_INCREMENT NOT NULL,
+    orderPurchaseDate datetime NOT NULL,
+    customerID INT(11),
+    PRIMARY KEY (orderId),
+    foreign KEY (customerID) REFERENCES Customers (customerID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Goods (
-    itemID int(11) AUTO_INCREMENT,
-    goodPrice decimal(11,0) NOT NULL,
-    goodLocationInStore varchar(15) NOT NULL,
+    itemID INT(11) AUTO_INCREMENT,
+    goodPrice DECIMAL(11,0) NOT NULL,
+    goodLocationInStore VARCHAR(15) NOT NULL,
     goodExpirationDate date,
-    supplierID int(11),
-    orderID int(11),
+    supplierID INT(11),
+    orderID INT(11),
     PRIMARY KEY (itemID),
     FOREIGN KEY (orderID) REFERENCES Orders (orderID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Suppliers (
-    supplierID int(11) AUTO_INCREMENT NOT NULL,
-    supplierName varchar(35) NOT NULL,
+    supplierID INT(11) AUTO_INCREMENT NOT NULL,
+    supplierName VARCHAR(35) NOT NULL,
     PRIMARY KEY (supplierID)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE SupplierGoods (
-    itemID int(11) NOT NULL,
-    supplierID int(11) NOT NULL,
+    itemID INT(11) NOT NULL,
+    supplierID INT(11) NOT NULL,
     PRIMARY KEY (supplierID, itemID),
     FOREIGN KEY (supplierID) REFERENCES Goods (itemID),
     FOREIGN KEY (itemID) REFERENCES Suppliers (supplierID)
