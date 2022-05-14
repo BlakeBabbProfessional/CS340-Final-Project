@@ -58,7 +58,7 @@ INSERT INTO Orders (orderPurchaseDate)
     VALUES ('2022-05-13 05:01:59 PM'), ('2022-12-25 15:11:29 PM');
 
 -- Goods
-INSERT INTO Goods (goodPrice, goodLocationInStore, GoodExpirationDate)
+INSERT INTO Goods (goodPrice, goodLocationInStore, goodExpirationDate)
     VALUES ('12.34', 'A5', '2022-05-18'), ('1.00', 'E10', '2024-10-06');
 
 -- Customers
