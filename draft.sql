@@ -62,7 +62,7 @@ INSERT INTO Goods (goodPrice, goodLocationInStore, GoodExpirationDate)
     VALUES ('12.34', 'A5', '2022-05-18'), ('1.00', 'E10', '2024-10-06');
 
 -- Customers
-INSERT INTO Customers (CUSTOMERFIRSTNAME, CUSTOMERLASTNAME, CUSTOMERDATEOFBIRTH, CUSTOMERTOTALCOST)
+INSERT INTO Customers (customerFirstName, customerLastName, customerDateOfBirth, customerTotalCost)
     VALUES ('Joe', 'Schmoe', '1983/8/23', 12.39),
            ('Sarah', 'Smith', '1999/12/3', 99.99),
            ('Bo', 'Schmoe', '2007/3/12', 12.39);
