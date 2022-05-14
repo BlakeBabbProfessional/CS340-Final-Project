@@ -25,7 +25,7 @@ create table Orders (
 
 CREATE TABLE Goods (
     itemID int(11) AUTO_INCREMENT,
-    goodPrice decimal(11,0) NOT NULL,
+    goodPrice decimal(11,2) NOT NULL,
     goodLocationInStore varchar(15) NOT NULL,
     goodExpirationDate date,
     supplierID int(11),
@@ -47,3 +47,11 @@ CREATE TABLE SupplierGoods (
     FOREIGN KEY (supplierID) REFERENCES Goods (itemID),
     FOREIGN KEY (itemID) REFERENCES Suppliers (supplierID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Orders
+INSERT INTO Orders (orderPurchaseDate) VALUES (('2022-05-13 05:01:59 PM'), ('2022-12-25 15:11:29 PM'));
+
+-- Goods
+INSERT INTO Goods (goodPrice, goodLocationInStore, GoodExpirationDate) VALUES (('12.34', `A5`, `2022-05-18`), ('1.00', 'E10', '2024-10-06'));
+
+
