@@ -1,4 +1,4 @@
--- Clear way for new TABLEs
+-- Clear way for new tables
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS Customers;
 DROP TABLE IF EXISTS Suppliers;
@@ -20,15 +20,15 @@ CREATE TABLE Customers (
 
 CREATE TABLE Orders (
     orderID INT(11) AUTO_INCREMENT NOT NULL,
-    orderPurchaseDate datetime NOT NULL,
+    orderPurchaseDate DATETIME NOT NULL,
     customerID INT(11),
     PRIMARY KEY (orderId),
-    foreign KEY (customerID) REFERENCES Customers (customerID)
+    FOREIGN KEY (customerID) REFERENCES Customers (customerID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Goods (
     itemID INT(11) AUTO_INCREMENT,
-    goodPrice DECIMAL(11,0) NOT NULL,
+    goodPrice DECIMAL(11,2) NOT NULL,
     goodLocationInStore VARCHAR(15) NOT NULL,
     goodExpirationDate date,
     supplierID INT(11),
@@ -54,30 +54,19 @@ CREATE TABLE SupplierGoods (
 -- Insert sample data
 
 -- Orders
-INSERT INTO Orders (orderPurchaseDate) 
-    VALUES (('2022-05-13 05:01:59 PM'), ('2022-12-25 15:11:29 PM'));
+INSERT INTO Orders (orderPurchaseDate)
+    VALUES ('2022-05-13 05:01:59 PM'), ('2022-12-25 15:11:29 PM');
 
 -- Goods
-INSERT INTO Goods (goodPrice, goodLocationInStore, GoodExpirationDate) 
-    VALUES (('12.34', `A5`, `2022-05-18`), ('1.00', 'E10', '2024-10-06'));
+INSERT INTO Goods (goodPrice, goodLocationInStore, GoodExpirationDate)
+    VALUES ('12.34', 'A5', '2022-05-18'), ('1.00', 'E10', '2024-10-06');
 
+-- Customers
 INSERT INTO Customers (CUSTOMERFIRSTNAME, CUSTOMERLASTNAME, CUSTOMERDATEOFBIRTH, CUSTOMERTOTALCOST)
-    VALUES ('Joe', 'Schmoe', '1983/8/23', 12.39);
-INSERT INTO Customers (CUSTOMERFIRSTNAME, CUSTOMERLASTNAME, CUSTOMERDATEOFBIRTH, CUSTOMERTOTALCOST)
-    VALUES ('Sarah', 'Smith', '1999/12/3', 99.99);
-INSERT INTO Customers (CUSTOMERFIRSTNAME, CUSTOMERLASTNAME, CUSTOMERDATEOFBIRTH, CUSTOMERTOTALCOST)
-    VALUES ('Bo', 'Schmoe', '2007/3/12', 12.39);
+    VALUES ('Joe', 'Schmoe', '1983/8/23', 12.39),
+           ('Sarah', 'Smith', '1999/12/3', 99.99),
+           ('Bo', 'Schmoe', '2007/3/12', 12.39);
 
+-- Suppliers
 INSERT INTO Suppliers (supplierName)
-    VALUES ('Fruity Farms');
-INSERT INTO Suppliers (supplierName)
-    VALUES ('Mack''s Milk');
-INSERT INTO Suppliers (supplierName)
-    VALUES ('Super Soy');
-
-INSERT INTO SupplierGoods (itemID, supplierID)
-    VALUES (1, 3);
-INSERT INTO SupplierGoods (itemID, supplierID)
-    VALUES (2, 1);
-INSERT INTO SupplierGoods (itemID, supplierID)
-    VALUES (3, 2);
+    VALUES ('Fruity Farms'), ('Mack''s Milk'), ('Super Soy');
