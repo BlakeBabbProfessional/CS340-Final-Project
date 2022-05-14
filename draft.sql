@@ -27,15 +27,9 @@ CREATE TABLE Orders (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Goods (
-<<<<<<< HEAD
-    itemID int(11) AUTO_INCREMENT,
-    goodPrice decimal(11,2) NOT NULL,
-    goodLocationInStore varchar(15) NOT NULL,
-=======
     itemID INT(11) AUTO_INCREMENT,
     goodPrice DECIMAL(11,0) NOT NULL,
     goodLocationInStore VARCHAR(15) NOT NULL,
->>>>>>> 2e8c17aae5b355b47f90ead6a1b3b77fe445f60b
     goodExpirationDate date,
     supplierID INT(11),
     orderID INT(11),
