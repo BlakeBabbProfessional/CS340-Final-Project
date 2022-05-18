@@ -1,4 +1,4 @@
-// load the "node-ini" module and assign it to variable "ini"
+// load the "node" module and assign it to variable "node"
 let ini = require('node-ini');
 
 // parse the MySQL client configuration file, ~/.my.cnf 
@@ -7,6 +7,8 @@ let mysql_config = ini.parseSync('../.my.cnf').client;
 
 // load the "mysql" module 
 let mysql = require('mysql');
+
+let exphbs = require('express-handlebars');
 
 // create a MySQL connection pool object using the
 // database server hostname, database username, 
@@ -24,21 +26,33 @@ let express = require('express');
 
 // create the Express application object
 let app = express();
+// let exphbs = require('express-handlebars')
 
 // get the TCP port number from the ccommandline
 let port = process.argv[2];
 
-// configure static routing for the '/static/' subdirectory
-app.use('/static', express.static('static'));
+app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
 
-app.get('/', (req, res) => { // the arrow notation means: function(req, res) { ...
+app.use(express.json())
+app.use(express.static('public'))
+
+// start the Node.js webserver
+app.listen(port, () => {
+    // note, for a string delimited with backticks, there is variable 
+      // interpolation within the string
+      let pid = require('process').pid;
+      console.log(`flip[number].engr.oregonstate.edu:${port}`);
+  });  
+
+app.get('/', (req, res) => {
 //    let pool = req.app.get('mysql');
-    mysql_pool.query('select * from Customers;',   // could opt to use a setting on `app` instead of a module variable
-               function(error, results, fields) {
-                   if (error) {
-                       res.write(JSON.stringify(error));
-                       res.end();
-                   }
+    // mysql_pool.query('select * from Customers;',
+            //    function(error, results, fields) {
+                //    if (error) {
+                    //    res.write(JSON.stringify(error));
+                    //    res.end();
+                //    }
                 //    let id =          results.map(obj => Object.keys(obj).map(k => obj[k])[0]);
                 //    let first_name =  results.map(obj => Object.keys(obj).map(k => obj[k])[1]);
                 //    let last_name =   results.map(obj => Object.keys(obj).map(k => obj[k])[2]);
@@ -47,14 +61,7 @@ app.get('/', (req, res) => { // the arrow notation means: function(req, res) { .
                     //    res.write(`<tr><td>${id[i]}</td><td>${first_name[i]}</td><td>${last_name[i]}</td>git <td>${last_update[i]}</td></tr>\n`);
                 //    }
 		        // res.write("</table>\n");
-		   res.end();
-    	       });
-});
-
-// start the Node.js webserver
-app.listen(port, () => {
-  // note, for a string delimited with backticks, there is variable 
-    // interpolation within the string
-    let pid = require('process').pid;
-    console.log(`flip[number].engr.oregonstate.edu:${port}`);
+		//    res.end();
+    	    //    });
+    res.status(200).render('customer')
 });
