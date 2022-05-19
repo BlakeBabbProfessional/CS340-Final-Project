@@ -45,8 +45,7 @@ app.listen(port, () => {
       console.log(`flip[number].engr.oregonstate.edu:${port}`);
   });  
 
-app.get('/', (req, res) => {
-//    let pool = req.app.get('mysql');
+  //    let pool = req.app.get('mysql');
     // mysql_pool.query('select * from Customers;',
             //    function(error, results, fields) {
                 //    if (error) {
@@ -63,5 +62,27 @@ app.get('/', (req, res) => {
 		        // res.write("</table>\n");
 		//    res.end();
     	    //    });
-    res.status(200).render('customer')
+
+app.get('/', (req, res) => {
+    res.status(200).render('index')
 });
+
+app.get('/customer', (req, res) => {
+    res.status(200).render('customer')
+})
+
+app.get('/goods', (req, res) => {
+    res.status(200).render('goods')
+})
+
+app.get('/orders', (req, res) => {
+    res.status(200).render('orders')
+})
+
+app.get('/suppliers', (req, res) => {
+    res.status(200).render('suppliers')
+})
+
+app.get('/suppliers-goods', (req, res) => {
+    res.status(200).render('suppliers-goods')
+})
