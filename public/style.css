@@ -1,0 +1,192 @@
+html {
+    height: 100%;
+}
+ 
+body {
+    font-family: sans-serif;
+    position: relative;
+    height: 100%;
+}
+
+.background-wrap {
+    position: relative;
+    height: 100%;
+    /*
+    background-repeat: repeat;
+    background-size: 320px;
+    background-image: url(https://www.netclipart.com/pp/m/0-4586_download-mint-chocolate-chip-ice-cream-clipart.png);
+    background-repeat: repeat;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    opacity: 50%;
+    z-index: -1;
+    */
+}
+
+.background-wrap:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    background-image: url('https://www.netclipart.com/pp/m/0-4586_download-mint-chocolate-chip-ice-cream-clipart.png');
+    background-repeat: repeat;
+    background-size: 160px;
+    background-position: 50% 0;
+    z-index: -1;
+}
+
+h1, h2, h3, h4 {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+p {
+    margin: 40px;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* contents */
+/*
+
+.entity-modified-container {
+    display: inline-block;
+}
+*/
+.contents {
+    display: flex;
+    background: whitesmoke;
+    position: relative;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    border: thick double black;
+    /*justify-content: center;*/
+}
+
+.entity-table-container {
+    display: flex;
+    margin: auto;
+    width: 50%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    align-self: flex-start;
+    flex-direction: column;
+    border: thick double rgb(226, 226, 226);
+    padding-bottom: 32px;
+}
+
+/* tables */
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* filter */
+
+.filter {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    align-items: center;
+}
+
+.filter-text-input {
+    text-align: center;
+}
+
+/* insert */
+
+.entity-field-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 16px;
+    padding: 16px;
+    border: thick double rgb(226, 226, 226);
+}
+
+.entity-input-container {
+    align-self: left;
+    margin: 5px;
+
+}
+
+.add-button {
+    margin: 5px;
+    width: 70px;
+    align-self: center;
+}
+
+.update-button {
+    margin: 5px;
+    width: 70px;
+    align-self: center;
+}
+
+/* header */
+
+header { text-align: center }
+
+.table-header {
+    background-color: whitesmoke;
+    background-size: 50px;
+    border: thick double black;
+}
+
+.title {
+    display: relative;
+    position: center;
+    font-size: 40px;
+    width: 100%;
+    padding-bottom: 40px;
+}
+
+.title-tabs-container {
+    background-color: whitesmoke;
+    border: thick double black;
+    resize: both;
+}
+
+.navbar {
+    margin-top: -60px;
+    font-size: 18px;
+}
+
+.navlist {
+    display: flex;
+    justify-content: center;
+}
+
+.navitem {
+    text-align: center;
+    display: inline-block;
+    margin: 2px;
+    border: 1px solid black;
+}
+
+.navitem:hover { background-color: lightblue }
+
+.navitem a {
+    display: inline-block;
+    color: #454545;
+    padding: 5px 10px;
+    text-decoration: none;
+}

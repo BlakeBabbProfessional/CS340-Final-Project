@@ -1,9 +1,13 @@
 // load the "node" module and assign it to variable "node"
 let ini = require('node-ini');
 
+const path = require('path');
+
+const homedir = require('os').homedir();
+
 // parse the MySQL client configuration file, ~/.my.cnf 
-// and extract the configuration info under the "client" key
-let mysql_config = ini.parseSync('../.my.cnf').client;
+// and extract the configuration info under the "client_local" key
+let mysql_config = ini.parseSync(path.join(homedir, '.my.cnf'));
 
 // load the "mysql" module 
 let mysql = require('mysql');

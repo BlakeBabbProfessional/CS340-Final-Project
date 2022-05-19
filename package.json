@@ -21,7 +21,9 @@
     "express-handlebars": "^6.0.6",
     "handlebars": "^4.7.7",
     "mysql": "^2.18.1",
-    "node-ini": "^1.0.0"
+    "node-ini": "^1.0.0",
+    "os": "^0.1.2",
+    "path": "^0.12.7"
   },
   "devDependencies": {},
   "description": ""
