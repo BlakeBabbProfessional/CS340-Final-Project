@@ -97,13 +97,53 @@ app.get('/goods', (req, res) => {
 })
 
 app.get('/orders', (req, res) => {
-    res.status(200).render('orders')
+    mysql_pool.query('SELECT * FROM Orders;',
+    function(error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        let out = ""
+        let id =          results.map(obj => Object.keys(obj).map(k => obj[k])[0]);
+        let date =        results.map(obj => Object.keys(obj).map(k => obj[k])[1]);
+        let customer_id = results.map(obj => Object.keys(obj).map(k => obj[k])[2]);
+        for (let i = 0; i < id.length; i++) {
+            out += (`<tr><td>${id[i]}</td><td>${date[i]}</td><td>${customer_id[i]}</td></tr>\n`);
+        }
+        res.status(200).render('orders', {table: out})
+    });  
 })
 
 app.get('/suppliers', (req, res) => {
-    res.status(200).render('suppliers')
+    mysql_pool.query('SELECT * FROM Suppliers;',
+    function(error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        let out = ""
+        let id =   results.map(obj => Object.keys(obj).map(k => obj[k])[0]);
+        let name = results.map(obj => Object.keys(obj).map(k => obj[k])[1]);
+        for (let i = 0; i < id.length; i++) {
+            out += (`<tr><td>${id[i]}</td><td>${name[i]}</td></tr>\n`);
+        }
+        res.status(200).render('suppliers', {table: out})
+    });  
 })
 
 app.get('/suppliers-goods', (req, res) => {
-    res.status(200).render('suppliers-goods')
+    mysql_pool.query('SELECT * FROM SuppliersGoods;',
+    function(error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        let out = ""
+        let good_id     = results.map(obj => Object.keys(obj).map(k => obj[k])[0]);
+        let supplier_id = results.map(obj => Object.keys(obj).map(k => obj[k])[1]);
+        for (let i = 0; i < id.length; i++) {
+            out += (`<tr><td>${good_id[i]}</td><td>${supplier_id[i]}</td></tr>\n`);
+        }
+        res.status(200).render('suppliers-goods', {table: out})
+    });  
 })
