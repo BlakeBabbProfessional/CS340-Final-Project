@@ -132,7 +132,7 @@ app.get('/suppliers', (req, res) => {
 })
 
 app.get('/suppliers-goods', (req, res) => {
-    mysql_pool.query('SELECT * FROM SuppliersGoods;',
+    mysql_pool.query('SELECT * FROM SupplierGoods;',
     function(error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
@@ -141,7 +141,7 @@ app.get('/suppliers-goods', (req, res) => {
         let out = ""
         let good_id     = results.map(obj => Object.keys(obj).map(k => obj[k])[0]);
         let supplier_id = results.map(obj => Object.keys(obj).map(k => obj[k])[1]);
-        for (let i = 0; i < id.length; i++) {
+        for (let i = 0; i < good_id.length; i++) {
             out += (`<tr><td>${good_id[i]}</td><td>${supplier_id[i]}</td></tr>\n`);
         }
         res.status(200).render('suppliers-goods', {table: out})
