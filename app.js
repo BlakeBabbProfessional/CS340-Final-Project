@@ -9,6 +9,7 @@ const homedir = require('os').homedir();
 // and extract the configuration info under the "client_local" key
 // let mysql_config = ini.parseSync(path.join(homedir, '.my.cnf'));
 let mysql_config = ini.parseSync('../.my.cnf').client;
+// let mysql_config = ini.parseSync('/etc/my.cnf');
 
 // load the "mysql" module 
 let mysql = require('mysql');
@@ -55,21 +56,20 @@ app.get('/', (req, res) => {
 });
 
 app.get('/customer', (req, res) => {
-    let out = ""
-
     mysql_pool.query('SELECT * FROM Customers;',
         function(error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));
                 res.end();
             }
+            let out = ""
             let id =                 results.map(obj => Object.keys(obj).map(k => obj[k])[0]);
             let first_name =         results.map(obj => Object.keys(obj).map(k => obj[k])[1]);
             let last_name =          results.map(obj => Object.keys(obj).map(k => obj[k])[2]);
             let date_of_birth =      results.map(obj => Object.keys(obj).map(k => obj[k])[3]);
             let total_amount_spent = results.map(obj => Object.keys(obj).map(k => obj[k])[4]);
             for (let i = 0; i < id.length; i++) {
-                out += (`<tr><td>${id[i]}</td><td>${first_name[i]}</td><td>${last_name[i]}</td>git <td>${date_of_birth[i]}</td><td>${total_amount_spent[i]}</td></tr>\n`);
+                out += (`<tr><td>${id[i]}</td><td>${first_name[i]}</td><td>${last_name[i]}</td><td>${date_of_birth[i]}</td><td>${total_amount_spent[i]}</td></tr>\n`);
             }
             res.status(200).render('customer', {table: out})
     });    
