@@ -55,6 +55,22 @@ app.get('/', (req, res) => {
     res.status(200).render('index')
 });
 
+function results_to_table(results, number_of_columns) {
+    columns = []
+    table = ""
+    for (let i = 0; i < number_of_columns; i++) {
+        columns.push(results.map(obj => Object.keys(obj).map(k => obj[k])[i]))
+    }
+    // for each row fill each cell through each column
+    for (let i = 0; i < columns[0].length; i++) {
+        table += `<tr>`
+        for (let j = 0; j < columns.length; j++) {
+            table += `<td>${columns[j][i]}</td>`
+        }
+    } 
+    return table
+}
+
 app.get('/customer', (req, res) => {
     mysql_pool.query('SELECT * FROM Customers;',
         function(error, results, fields) {
@@ -62,16 +78,7 @@ app.get('/customer', (req, res) => {
                 res.write(JSON.stringify(error));
                 res.end();
             }
-            let out = ""
-            let id =                 results.map(obj => Object.keys(obj).map(k => obj[k])[0]);
-            let first_name =         results.map(obj => Object.keys(obj).map(k => obj[k])[1]);
-            let last_name =          results.map(obj => Object.keys(obj).map(k => obj[k])[2]);
-            let date_of_birth =      results.map(obj => Object.keys(obj).map(k => obj[k])[3]);
-            let total_amount_spent = results.map(obj => Object.keys(obj).map(k => obj[k])[4]);
-            for (let i = 0; i < id.length; i++) {
-                out += (`<tr><td>${id[i]}</td><td>${first_name[i]}</td><td>${last_name[i]}</td><td>${date_of_birth[i]}</td><td>${total_amount_spent[i]}</td></tr>\n`);
-            }
-            res.status(200).render('customer', {table: out})
+            res.status(200).render('customer', {table: results_to_table(results, 5)})
     });    
 })
 
@@ -82,17 +89,7 @@ app.get('/goods', (req, res) => {
                 res.write(JSON.stringify(error));
                 res.end();
             }
-            let out = ""
-            let id =              results.map(obj => Object.keys(obj).map(k => obj[k])[0]);
-            let price =           results.map(obj => Object.keys(obj).map(k => obj[k])[1]);
-            let location =        results.map(obj => Object.keys(obj).map(k => obj[k])[2]);
-            let expiration_date = results.map(obj => Object.keys(obj).map(k => obj[k])[3]);
-            let supplier_id =     results.map(obj => Object.keys(obj).map(k => obj[k])[4]);
-            let order_id =        results.map(obj => Object.keys(obj).map(k => obj[k])[5]);
-            for (let i = 0; i < id.length; i++) {
-                out += (`<tr><td>${id[i]}</td><td>${price[i]}</td><td>${location[i]}</td><td>${expiration_date[i]}</td><td>${supplier_id[i]}</td><td>${order_id[i]}</td></tr>\n`);
-            }
-            res.status(200).render('goods', {table: out})
+            res.status(200).render('goods', {table: results_to_table(results, 6)})
     });  
 })
 
@@ -103,14 +100,7 @@ app.get('/orders', (req, res) => {
             res.write(JSON.stringify(error));
             res.end();
         }
-        let out = ""
-        let id =          results.map(obj => Object.keys(obj).map(k => obj[k])[0]);
-        let date =        results.map(obj => Object.keys(obj).map(k => obj[k])[1]);
-        let customer_id = results.map(obj => Object.keys(obj).map(k => obj[k])[2]);
-        for (let i = 0; i < id.length; i++) {
-            out += (`<tr><td>${id[i]}</td><td>${date[i]}</td><td>${customer_id[i]}</td></tr>\n`);
-        }
-        res.status(200).render('orders', {table: out})
+        res.status(200).render('orders', {table: results_to_table(results, 3)})
     });  
 })
 
@@ -121,13 +111,7 @@ app.get('/suppliers', (req, res) => {
             res.write(JSON.stringify(error));
             res.end();
         }
-        let out = ""
-        let id =   results.map(obj => Object.keys(obj).map(k => obj[k])[0]);
-        let name = results.map(obj => Object.keys(obj).map(k => obj[k])[1]);
-        for (let i = 0; i < id.length; i++) {
-            out += (`<tr><td>${id[i]}</td><td>${name[i]}</td></tr>\n`);
-        }
-        res.status(200).render('suppliers', {table: out})
+        res.status(200).render('suppliers', {table: results_to_table(results, 2)})
     });  
 })
 
@@ -138,12 +122,6 @@ app.get('/suppliers-goods', (req, res) => {
             res.write(JSON.stringify(error));
             res.end();
         }
-        let out = ""
-        let good_id     = results.map(obj => Object.keys(obj).map(k => obj[k])[0]);
-        let supplier_id = results.map(obj => Object.keys(obj).map(k => obj[k])[1]);
-        for (let i = 0; i < good_id.length; i++) {
-            out += (`<tr><td>${good_id[i]}</td><td>${supplier_id[i]}</td></tr>\n`);
-        }
-        res.status(200).render('suppliers-goods', {table: out})
+        res.status(200).render('suppliers-goods', {table: results_to_table(results, 2)})
     });  
 })
