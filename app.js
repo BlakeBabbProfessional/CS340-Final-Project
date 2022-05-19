@@ -29,6 +29,7 @@ let mysql_pool = mysql.createPool({
 
 // load the "express" module
 let express = require('express');
+const { table } = require('console');
 
 // create the Express application object
 let app = express();
@@ -57,7 +58,8 @@ app.get('/', (req, res) => {
 
 function results_to_table(results, number_of_columns) {
     columns = []
-    table = ""
+    let table = ""
+    if (!results) {return table}
     for (let i = 0; i < number_of_columns; i++) {
         columns.push(results.map(obj => Object.keys(obj).map(k => obj[k])[i]))
     }
@@ -82,6 +84,19 @@ app.get('/customer', (req, res) => {
     });    
 })
 
+app.get('/customer/:filter_column/:filter', (req, res) => {
+    let filter_column = req.params.filter_column
+    let filter = req.params.filter
+    mysql_pool.query(`SELECT * FROM Customers WHERE ${filter_column} LIKE ${filter};`,
+        function(error, results, fields) {
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            res.status(200).render('customer', {table: results_to_table(results, 5)})
+    });
+})
+
 app.get('/goods', (req, res) => {
     mysql_pool.query('SELECT * FROM Goods;',
         function(error, results, fields) {
@@ -91,6 +106,19 @@ app.get('/goods', (req, res) => {
             }
             res.status(200).render('goods', {table: results_to_table(results, 6)})
     });  
+})
+
+app.get('/goods/:filter_column/:filter', (req, res) => {
+    let filter_column = req.params.filter_column
+    let filter = req.params.filter
+    mysql_pool.query(`SELECT * FROM Goods WHERE ${filter_column} LIKE ${filter};`,
+        function(error, results, fields) {
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            res.status(200).render('goods', {table: results_to_table(results, 6)})
+    });
 })
 
 app.get('/orders', (req, res) => {
@@ -104,6 +132,19 @@ app.get('/orders', (req, res) => {
     });  
 })
 
+app.get('/orders/:filter_column/:filter', (req, res) => {
+    let filter_column = req.params.filter_column
+    let filter = req.params.filter
+    mysql_pool.query(`SELECT * FROM Orders WHERE ${filter_column} LIKE ${filter};`,
+        function(error, results, fields) {
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            res.status(200).render('orders', {table: results_to_table(results, 3)})
+    });
+})
+
 app.get('/suppliers', (req, res) => {
     mysql_pool.query('SELECT * FROM Suppliers;',
     function(error, results, fields) {
@@ -115,6 +156,19 @@ app.get('/suppliers', (req, res) => {
     });  
 })
 
+app.get('/suppliers/:filter_column/:filter', (req, res) => {
+    let filter_column = req.params.filter_column
+    let filter = req.params.filter
+    mysql_pool.query(`SELECT * FROM Suppliers WHERE ${filter_column} LIKE ${filter};`,
+        function(error, results, fields) {
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            res.status(200).render('suppliers', {table: results_to_table(results, 2)})
+    });
+})
+
 app.get('/suppliers-goods', (req, res) => {
     mysql_pool.query('SELECT * FROM SupplierGoods;',
     function(error, results, fields) {
@@ -124,4 +178,17 @@ app.get('/suppliers-goods', (req, res) => {
         }
         res.status(200).render('suppliers-goods', {table: results_to_table(results, 2)})
     });  
+})
+
+app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
+    let filter_column = req.params.filter_column
+    let filter = req.params.filter
+    mysql_pool.query(`SELECT * FROM SuppliersGoods WHERE ${filter_column} LIKE ${filter};`,
+        function(error, results, fields) {
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            res.status(200).render('suppliers', {table: results_to_table(results, 2)})
+    });
 })
