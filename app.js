@@ -76,7 +76,24 @@ app.get('/customer', (req, res) => {
 })
 
 app.get('/goods', (req, res) => {
-    res.status(200).render('goods')
+    mysql_pool.query('SELECT * FROM Goods;',
+        function(error, results, fields) {
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            let out = ""
+            let id =              results.map(obj => Object.keys(obj).map(k => obj[k])[0]);
+            let price =           results.map(obj => Object.keys(obj).map(k => obj[k])[1]);
+            let location =        results.map(obj => Object.keys(obj).map(k => obj[k])[2]);
+            let expiration_date = results.map(obj => Object.keys(obj).map(k => obj[k])[3]);
+            let supplier_id =     results.map(obj => Object.keys(obj).map(k => obj[k])[4]);
+            let order_id =        results.map(obj => Object.keys(obj).map(k => obj[k])[5]);
+            for (let i = 0; i < id.length; i++) {
+                out += (`<tr><td>${id[i]}</td><td>${price[i]}</td><td>${location[i]}</td><td>${expiration_date[i]}</td><td>${supplier_id[i]}</td><td>${order_id[i]}</td></tr>\n`);
+            }
+            res.status(200).render('goods', {table: out})
+    });  
 })
 
 app.get('/orders', (req, res) => {
