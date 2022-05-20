@@ -26,5 +26,5 @@ document.getElementById('entity-filter-button').addEventListener('click', () => 
             break
     }
 
-    window.location.href = `/customer/${filterColumn}/"${filterText}"`
+    window.location.href = `/customer/${filterColumn}/${filterText}`
 })

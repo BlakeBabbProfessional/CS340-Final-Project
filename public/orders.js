@@ -13,12 +13,12 @@ document.getElementById('entity-filter-button').addEventListener('click', () => 
             filterColumn = "orderID"
             break
         case 1:
-            filterColumn = "orderDate"
+            filterColumn = "orderPurchaseDate"
             break;
         case 2:
             filterColumn = "customerID"
             break
     }
 
-    window.location.href = `/orders/${filterColumn}/"${filterText}"`
+    window.location.href = `/orders/${filterColumn}/${filterText}`
 })

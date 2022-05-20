@@ -87,7 +87,7 @@ app.get('/customer', (req, res) => {
 app.get('/customer/:filter_column/:filter', (req, res) => {
     let filter_column = req.params.filter_column
     let filter = req.params.filter
-    mysql_pool.query(`SELECT * FROM Customers WHERE ${filter_column} LIKE ${filter};`,
+    mysql_pool.query(`SELECT * FROM Customers WHERE ${filter_column} LIKE "${filter}%";`,
         function(error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));
@@ -111,7 +111,7 @@ app.get('/goods', (req, res) => {
 app.get('/goods/:filter_column/:filter', (req, res) => {
     let filter_column = req.params.filter_column
     let filter = req.params.filter
-    mysql_pool.query(`SELECT * FROM Goods WHERE ${filter_column} LIKE ${filter};`,
+    mysql_pool.query(`SELECT * FROM Goods WHERE ${filter_column} LIKE "${filter}%";`,
         function(error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));
@@ -135,7 +135,7 @@ app.get('/orders', (req, res) => {
 app.get('/orders/:filter_column/:filter', (req, res) => {
     let filter_column = req.params.filter_column
     let filter = req.params.filter
-    mysql_pool.query(`SELECT * FROM Orders WHERE ${filter_column} LIKE ${filter};`,
+    mysql_pool.query(`SELECT * FROM Orders WHERE ${filter_column} LIKE "${filter}%";`,
         function(error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));
@@ -159,7 +159,7 @@ app.get('/suppliers', (req, res) => {
 app.get('/suppliers/:filter_column/:filter', (req, res) => {
     let filter_column = req.params.filter_column
     let filter = req.params.filter
-    mysql_pool.query(`SELECT * FROM Suppliers WHERE ${filter_column} LIKE ${filter};`,
+    mysql_pool.query(`SELECT * FROM Suppliers WHERE ${filter_column} LIKE "${filter}%";`,
         function(error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));
@@ -183,7 +183,7 @@ app.get('/suppliers-goods', (req, res) => {
 app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
     let filter_column = req.params.filter_column
     let filter = req.params.filter
-    mysql_pool.query(`SELECT * FROM SuppliersGoods WHERE ${filter_column} LIKE ${filter};`,
+    mysql_pool.query(`SELECT * FROM SuppliersGoods WHERE ${filter_column} LIKE "${filter}%";`,
         function(error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));
