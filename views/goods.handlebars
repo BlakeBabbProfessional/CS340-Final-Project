@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Fresh Goods - Goods</title>
+    <script src="/goods.js" charset="utf-8" defer></script>
     <link rel="stylesheet" href="/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -119,11 +120,14 @@
                 <div class="entity-input-container">
                     <select name="filter-dropdown" id="filter-dropdown-goods" class="filter-dropdown">
                         <option value="good-id">ID</option>
+                        <option value="good-price">Price</option>
                         <option value="good-location">Location</option>
                         <option value="good-expire-date">Expiration Date</option>
                         <option value="good-order-id">Order ID</option>
+                        <option value="good-supplier-id">Supplier ID</option>
                     </select>
                 </div>
+                <button id="entity-filter-button">Filter</button>
             </aside>
 
             <!-- table -->
