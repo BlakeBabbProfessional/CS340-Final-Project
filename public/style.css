@@ -147,10 +147,10 @@ table, th, td {
 header { text-align: center }
 
 .table-header {
-    opacity: 0.9;
     background-color: whitesmoke;
     background-size: 50px;
     border: thick double black;
+    margin: 30px 40%;
 }
 
 .title {
