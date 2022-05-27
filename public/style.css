@@ -129,13 +129,13 @@ table, th, td {
 
 }
 
-.add-button {
+#entity-add-button {
     margin: 5px;
     width: 70px;
     align-self: center;
 }
 
-.update-button {
+#entity-update-button {
     margin: 5px;
     width: 70px;
     align-self: center;

@@ -31,6 +31,28 @@ document.getElementById('entity-filter-button').addEventListener('click', () => 
     window.location.href = `/goods/${filterColumn}/${filterText}`
 })
 
+document.getElementById('entity-add-button').addEventListener('click', () => {
+    let inputPrice = document.getElementById('entity-price-text').value
+    let inputLocation = document.getElementById('entity-location-text').value
+    let inputExpirationDate = document.getElementById('entity-expiration-date-text').value
+
+    if (!inputPrice | !inputLocation | !inputExpirationDate) {
+        window.location.href = '/goods'
+        return
+    }
+
+    let req = new XMLHttpRequest()
+    let url = `/goods/${inputPrice}/${inputLocation}/${inputExpirationDate}`
+
+    req.open('POST', url)
+    req.setRequestHeader('Content-Type', 'application/sql')
+    req.send()
+
+    setTimeout(() => {
+        window.location.reload()
+    }, 10)
+})
+
 let buttons = document.getElementsByName('entity-remove-button')
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', (e) => {

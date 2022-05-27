@@ -46,6 +46,10 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
     req.open('POST', url)
     req.setRequestHeader('Content-Type', 'application/sql')
     req.send()
+
+    setTimeout(() => {
+        window.location.reload()
+    }, 10)
 })
 
 let buttons = document.getElementsByName('entity-remove-button')

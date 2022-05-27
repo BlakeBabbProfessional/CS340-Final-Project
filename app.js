@@ -194,6 +194,8 @@ app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
     });
 })
 
+// inserting
+
 app.post('/customer/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
     let add_amount_spent = req.params.amount_spent
     let add_first_name = req.params.first_name
@@ -201,6 +203,21 @@ app.post('/customer/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
     let add_dob = req.params.dob
 
     mysql_pool.query(`INSERT INTO Customers (customerFirstName, customerLastName, customerDateOfBirth, customerTotalCost) VALUES ('${add_first_name}', '${add_last_name}', '${add_dob}', '${add_amount_spent}');`,
+    function(error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+    });
+});
+
+app.post('/goods/:price/:location/:expiration_date/:orderID', (req, res) => {
+    let add_price = req.params.price
+    let add_location = req.params.location
+    let add_expiration_date = req.params.expiration_date
+    let add_order_id = req.params.orderID
+
+    mysql_pool.query(`INSERT INTO Goods (goodPrice, goodLocationInStore, goodExpirationDate) VALUES ('${add_price}', '${add_location}', '${add_expiration_date}');`,
     function(error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
