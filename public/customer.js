@@ -30,7 +30,6 @@ document.getElementById('entity-filter-button').addEventListener('click', () => 
 })
 
 let buttons = document.getElementsByName('entity-remove-button')
-
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', (e) => {
         let req = new XMLHttpRequest()
@@ -40,6 +39,8 @@ for (let i = 0; i < buttons.length; i++) {
         req.setRequestHeader('Content-Type', 'application/sql')
         req.send()
 
-        // window.location.reload()
+        setTimeout(() => {
+            window.location.reload()
+        }, 10)
     })
 }
