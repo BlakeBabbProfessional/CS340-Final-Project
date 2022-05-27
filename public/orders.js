@@ -23,6 +23,26 @@ document.getElementById('entity-filter-button').addEventListener('click', () => 
     window.location.href = `/orders/${filterColumn}/${filterText}`
 })
 
+document.getElementById('entity-add-button').addEventListener('click', () => {
+    let inputPurchaseDate = document.getElementById('entity-purchase-date-text').value
+
+    if (!inputPurchaseDate) {
+        window.location.href = '/orders'
+        return
+    }
+
+    let req = new XMLHttpRequest()
+    let url = `/orders/${inputPurchaseDate}`
+
+    req.open('POST', url)
+    req.setRequestHeader('Content-Type', 'application/sql')
+    req.send()
+
+    setTimeout(() => {
+        window.location.reload()
+    }, 10)
+})
+
 let buttons = document.getElementsByName('entity-remove-button')
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', (e) => {

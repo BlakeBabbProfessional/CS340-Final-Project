@@ -211,13 +211,36 @@ app.post('/customer/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
     });
 });
 
-app.post('/goods/:price/:location/:expiration_date/:orderID', (req, res) => {
+app.post('/goods/:price/:location/:expiration_date', (req, res) => {
     let add_price = req.params.price
     let add_location = req.params.location
     let add_expiration_date = req.params.expiration_date
-    let add_order_id = req.params.orderID
 
     mysql_pool.query(`INSERT INTO Goods (goodPrice, goodLocationInStore, goodExpirationDate) VALUES ('${add_price}', '${add_location}', '${add_expiration_date}');`,
+    function(error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+    });
+});
+
+app.post('/orders/:purchase_date', (req, res) => {
+    let add_purchase_date = req.params.purchase_date
+
+    mysql_pool.query(`INSERT INTO Orders (orderPurchaseDate) VALUES ('${add_purchase_date}');`,
+    function(error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+    });
+});
+
+app.post('/suppliers/:supplier_name', (req, res) => {
+    let add_supplier_name = req.params.supplier_name
+
+    mysql_pool.query(`INSERT INTO Suppliers (supplierName) VALUES (${add_supplier_name})`, 
     function(error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
