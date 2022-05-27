@@ -22,3 +22,19 @@ document.getElementById('entity-filter-button').addEventListener('click', () => 
 
     window.location.href = `/orders/${filterColumn}/${filterText}`
 })
+
+let buttons = document.getElementsByName('entity-remove-button')
+for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', (e) => {
+        let req = new XMLHttpRequest()
+        let url = `/remove/Orders/orderID/${e.target.id}/`
+        
+        req.open('POST', url)
+        req.setRequestHeader('Content-Type', 'application/sql')
+        req.send()
+
+        setTimeout(() => {
+            window.location.reload()
+        }, 10)
+    })
+}
