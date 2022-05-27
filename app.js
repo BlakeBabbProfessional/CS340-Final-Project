@@ -69,6 +69,7 @@ function results_to_table(results, number_of_columns) {
         for (let j = 0; j < columns.length; j++) {
             table += `<td>${columns[j][i]}</td>`
         }
+        table += `<td><button name="entity-remove-button" id=${columns[0][i]}>remove</button></td>`
     } 
     return table
 }
@@ -193,32 +194,31 @@ app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
     });
 })
 
-app.get('/customer/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
+app.post('/customer/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
     let add_amount_spent = req.params.amount_spent
     let add_first_name = req.params.first_name
     let add_last_name = req.params.last_name
     let add_dob = req.params.dob
 
-    mysql_pool.query(`INSERT INTO Customers (customerFirstName, customerLastName, customerDateOfBirth, customerTotalCost) VALUES ('${add_first_name}', '${add_last_name}', ${add_dob}, ${add_amount_spent});`,
+    mysql_pool.query(`INSERT INTO Customers (customerFirstName, customerLastName, customerDateOfBirth, customerTotalCost) VALUES ('${add_first_name}', '${add_last_name}', '${add_dob}', '${add_amount_spent}');`,
+    function(error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+    });
+});
+
+app.post('/remove/:table/:attribute/:id', (req, res) => {        
+    let table = req.params.table
+    let attribute = req.params.attribute
+    let id = req.params.id
+
+    mysql_pool.query(`DELETE FROM ${table} WHERE ${attribute} = ${id};`,
         function(error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));
                 res.end();
             }
-            res.status(200).render('customer', {table: results_to_table(results, 5)});
         });
 });
-
-/*
-app.use('/orders', require('./public/orders.js'));
-app.use('/customer', require('./public/customer.js'));
-app.use('/suppliers-goods', require('./public/suppliers-goods.js'));
-app.use('/suppliers', require('./public/suppliers.js'));
-app.use('/goods', require('./public/goods.js'));
-
-var addButton = document.getElementsByClassName('add-button');
-
-addButton.addEventListener('click', function () {
-    console.log("hola");
-});
-*/

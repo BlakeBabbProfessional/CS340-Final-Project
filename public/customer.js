@@ -40,5 +40,25 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
         return
     }
 
-    window.location.href = `/customer/${inputAmountSpent}/${inputFirstName}/${inputLastName}/${inputDOB}`
+    let req = new XMLHttpRequest()
+    let url = `/customer/${inputAmountSpent}/${inputFirstName}/${inputLastName}/${inputDOB}`
+
+    req.open('POST', url)
+    req.setRequestHeader('Content-Type', 'application/sql')
+    req.send()
 })
+
+let buttons = document.getElementsByName('entity-remove-button')
+
+for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', (e) => {
+        let req = new XMLHttpRequest()
+        let url = `/remove/Customers/customerID/${e.target.id}/`
+        
+        req.open('POST', url)
+        req.setRequestHeader('Content-Type', 'application/sql')
+        req.send()
+
+        // window.location.reload()
+    })
+}
