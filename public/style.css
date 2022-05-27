@@ -70,15 +70,16 @@ p {
     padding-top: 32px;
     padding-bottom: 32px;
     border: thick double black;
-    height: 100%;
+    height: fit-content;
     /*justify-content: center;*/
 }
 
 .entity-table-container {
+    float: inline-start;
     display: flex;
-    margin: auto;
+    margin-left: 5%;
     width: 50%;
-    position: absolute;
+    /* position: relative; */
     left: 0;
     right: 0;
     align-self: flex-start;
