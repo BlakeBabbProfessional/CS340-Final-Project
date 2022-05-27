@@ -7,8 +7,8 @@ const homedir = require('os').homedir();
 
 // parse the MySQL client configuration file, ~/.my.cnf 
 // and extract the configuration info under the "client_local" key
-// let mysql_config = ini.parseSync(path.join(homedir, '.my.cnf'));
-let mysql_config = ini.parseSync('../.my.cnf').client;
+let mysql_config = ini.parseSync(path.join(homedir, '.my.cnf')).client;
+// let mysql_config = ini.parseSync('../.my.cnf').client;
 // let mysql_config = ini.parseSync('/etc/my.cnf');
 
 // load the "mysql" module 
@@ -192,3 +192,33 @@ app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
             res.status(200).render('suppliers', {table: results_to_table(results, 2)})
     });
 })
+
+app.get('/customer/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
+    let add_amount_spent = req.params.amount_spent
+    let add_first_name = req.params.first_name
+    let add_last_name = req.params.last_name
+    let add_dob = req.params.dob
+
+    mysql_pool.query(`INSERT INTO Customers (customerFirstName, customerLastName, customerDateOfBirth, customerTotalCost) VALUES ('${add_first_name}', '${add_last_name}', ${add_dob}, ${add_amount_spent});`,
+        function(error, results, fields) {
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            res.status(200).render('customer', {table: results_to_table(results, 5)});
+        });
+});
+
+/*
+app.use('/orders', require('./public/orders.js'));
+app.use('/customer', require('./public/customer.js'));
+app.use('/suppliers-goods', require('./public/suppliers-goods.js'));
+app.use('/suppliers', require('./public/suppliers.js'));
+app.use('/goods', require('./public/goods.js'));
+
+var addButton = document.getElementsByClassName('add-button');
+
+addButton.addEventListener('click', function () {
+    console.log("hola");
+});
+*/

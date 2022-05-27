@@ -28,3 +28,17 @@ document.getElementById('entity-filter-button').addEventListener('click', () => 
 
     window.location.href = `/customer/${filterColumn}/${filterText}`
 })
+
+document.getElementById('entity-add-button').addEventListener('click', () => {
+    let inputAmountSpent = document.getElementById('entity-amount-spent-text').value
+    let inputFirstName = document.getElementById('entity-first-name-text').value
+    let inputLastName = document.getElementById('entity-last-name-text').value
+    let inputDOB = document.getElementById('entity-dob-text').value
+
+    if (!inputAmountSpent | !inputFirstName | !inputLastName | !inputDOB) {
+        window.location.href = '/customer'
+        return
+    }
+
+    window.location.href = `/customer/${inputAmountSpent}/${inputFirstName}/${inputLastName}/${inputDOB}`
+})
