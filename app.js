@@ -69,6 +69,7 @@ function results_to_table(results, number_of_columns) {
         for (let j = 0; j < columns.length; j++) {
             table += `<td>${columns[j][i]}</td>`
         }
+        table += `<td><button name="entity-remove-button" id=${columns[0][i]}>remove</button></td>`
     } 
     return table
 }
@@ -191,4 +192,19 @@ app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
             }
             res.status(200).render('suppliers', {table: results_to_table(results, 2)})
     });
+})
+
+app.post('/remove/:table/:attribute/:id', (req, res) => {
+    let table = req.params.table
+    let attribute = req.params.attribute
+    let id = req.params.id
+
+    mysql_pool.query(`DELETE FROM ${table} WHERE ${attribute} = ${id};`,
+        function(error, results, fields) {
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+        }
+    )
 })
