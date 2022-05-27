@@ -21,15 +21,15 @@ document.getElementById('entity-filter-button').addEventListener('click', () => 
 })
 
 document.getElementById('entity-add-button').addEventListener('click', () => {
-    let input_supplier_name = document.getElementById('entity-supplier-name-text').value
+    let inputSupplierName = document.getElementById('entity-supplier-name-text').value
 
-    if (!input_supplier_name) {
+    if (!inputSupplierName) {
         window.location.href = '/suppliers'
         return
     }
 
     let req = new XMLHttpRequest()
-    let url = `/suppliers/${input_supplier_name}`
+    let url = `/suppliers/${inputSupplierName}`
 
     req.open('POST', url)
     req.setRequestHeader('Content-Type', 'application/sql')
@@ -37,7 +37,7 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
 
     setTimeout(() => {
         window.location.reload()
-    }, 10)
+    }, 15)
 })
 
 let buttons = document.getElementsByName('entity-remove-button')

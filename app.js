@@ -240,7 +240,7 @@ app.post('/orders/:purchase_date', (req, res) => {
 app.post('/suppliers/:supplier_name', (req, res) => {
     let add_supplier_name = req.params.supplier_name
 
-    mysql_pool.query(`INSERT INTO Suppliers (supplierName) VALUES (${add_supplier_name})`, 
+    mysql_pool.query(`INSERT INTO Suppliers (supplierName) VALUES ('${add_supplier_name}');`, 
     function(error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
@@ -249,6 +249,7 @@ app.post('/suppliers/:supplier_name', (req, res) => {
     });
 });
 
+// remove a row
 app.post('/remove/:table/:attribute/:id', (req, res) => {        
     let table = req.params.table
     let attribute = req.params.attribute
@@ -262,3 +263,21 @@ app.post('/remove/:table/:attribute/:id', (req, res) => {
             }
         });
 });
+/*
+// update a row
+app.post('/customer/:customer_id/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
+    let update_id = req.params.customer_id
+    let update_amount_spent = req.params.amount_spent
+    let update_first_name = req.params.first_name
+    let update_last_name = req.params.last_name
+    let update_dob = req.params.dob
+
+    mysql_pool.query(`UPDATE Customers SET customerFirstName = '${update_first_name}', customerLastName = '${update_last_name}', customerDateOfBirth = '${update_dob}', customerTotalCost = '${update_amount_spent}' WHERE customerID = '${update_id}';`,
+    function(error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+    });
+});
+*/

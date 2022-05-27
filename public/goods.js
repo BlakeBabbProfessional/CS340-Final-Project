@@ -50,7 +50,7 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
 
     setTimeout(() => {
         window.location.reload()
-    }, 10)
+    }, 15)
 })
 
 let buttons = document.getElementsByName('entity-remove-button')
