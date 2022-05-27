@@ -70,6 +70,7 @@ p {
     padding-top: 32px;
     padding-bottom: 32px;
     border: thick double black;
+    height: 100%;
     /*justify-content: center;*/
 }
 
@@ -83,7 +84,7 @@ p {
     align-self: flex-start;
     flex-direction: column;
     border: thick double rgb(226, 226, 226);
-    padding-bottom: 32px;
+    padding: 5px;
 }
 
 /* tables */
@@ -116,17 +117,17 @@ table, th, td {
 
 .entity-field-container {
     display: flex;
-    justify-content: center;
+    justify-content: top;
     flex-direction: column;
     margin-left: 16px;
     padding: 16px;
+    height: fit-content;
     border: thick double rgb(226, 226, 226);
 }
 
 .entity-input-container {
     align-self: left;
     margin: 5px;
-
 }
 
 .add-button {
@@ -146,6 +147,7 @@ table, th, td {
 header { text-align: center }
 
 .table-header {
+    opacity: 0.9;
     background-color: whitesmoke;
     background-size: 50px;
     border: thick double black;
