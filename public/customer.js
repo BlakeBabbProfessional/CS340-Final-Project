@@ -52,13 +52,13 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
     req.setRequestHeader('Content-Type', 'application/json')
     req.send()
 })
-/*
+
 document.getElementById('entity-update-button').addEventListener('click', () => {
     let inputCustomerID = document.getElementById('entity-update-number').value
-    let inputAmountSpent = document.getElementById('entity-amount-spent-text').value
-    let inputFirstName = document.getElementById('entity-first-name-text').value
-    let inputLastName = document.getElementById('entity-last-name-text').value
-    let inputDOB = document.getElementById('entity-dob-text').value
+    let inputAmountSpent = document.getElementById('entity-amount-spent-update').value
+    let inputFirstName = document.getElementById('entity-first-name-update').value
+    let inputLastName = document.getElementById('entity-last-name-update').value
+    let inputDOB = document.getElementById('entity-dob-update').value
 
     if (!inputCustomerID | !inputAmountSpent | !inputFirstName | !inputLastName | !inputDOB) {
         window.location.href = '/customer'
@@ -74,9 +74,8 @@ document.getElementById('entity-update-button').addEventListener('click', () => 
 
     setTimeout(() => {
         window.location.reload()
-    }, 10)
+    }, 60)
 })
-*/
 
 let buttons = document.getElementsByName('entity-remove-button')
 for (let i = 0; i < buttons.length; i++) {

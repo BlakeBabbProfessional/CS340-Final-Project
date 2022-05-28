@@ -40,6 +40,27 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
     }, 15)
 })
 
+document.getElementById('entity-update-button').addEventListener('click', () => {
+    let inputSupplierID = document.getElementById('entity-update-number').value
+    let inputSupplierName = document.getElementById('entity-supplier-name-update').value
+
+    if (!inputSupplierName) {
+        window.location.href = '/suppliers'
+        return
+    }
+
+    let req = new XMLHttpRequest()
+    let url = `/suppliers/${inputSupplierID}/${inputSupplierName}`
+
+    req.open('POST', url)
+    req.setRequestHeader('Content-Type', 'application/sql')
+    req.send()
+
+    setTimeout(() => {
+        window.location.reload()
+    }, 60)
+})
+
 let buttons = document.getElementsByName('entity-remove-button')
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', (e) => {
