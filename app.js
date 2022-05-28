@@ -78,7 +78,7 @@ app.get('/customer', (req, res) => {
     mysql_pool.query('SELECT * FROM Customers;',
         function(error, results, fields) {
             if (error) {
-                res.write(JSON.stringify(error));
+                res.status(400).write(JSON.stringify(error));
                 res.end();
             }
             res.status(200).render('customer', {table: results_to_table(results, 5)})
@@ -91,7 +91,7 @@ app.get('/customer/:filter_column/:filter', (req, res) => {
     mysql_pool.query(`SELECT * FROM Customers WHERE ${filter_column} LIKE "${filter}%";`,
         function(error, results, fields) {
             if (error) {
-                res.write(JSON.stringify(error));
+                res.status(400).write(JSON.stringify(error));
                 res.end();
             }
             res.status(200).render('customer', {table: results_to_table(results, 5)})
@@ -102,7 +102,7 @@ app.get('/goods', (req, res) => {
     mysql_pool.query('SELECT * FROM Goods;',
         function(error, results, fields) {
             if (error) {
-                res.write(JSON.stringify(error));
+                res.status(400).write(JSON.stringify(error));
                 res.end();
             }
             res.status(200).render('goods', {table: results_to_table(results, 6)})
@@ -115,7 +115,7 @@ app.get('/goods/:filter_column/:filter', (req, res) => {
     mysql_pool.query(`SELECT * FROM Goods WHERE ${filter_column} LIKE "${filter}%";`,
         function(error, results, fields) {
             if (error) {
-                res.write(JSON.stringify(error));
+                res.status(400).write(JSON.stringify(error));
                 res.end();
             }
             res.status(200).render('goods', {table: results_to_table(results, 6)})
@@ -126,7 +126,7 @@ app.get('/orders', (req, res) => {
     mysql_pool.query('SELECT * FROM Orders;',
     function(error, results, fields) {
         if (error) {
-            res.write(JSON.stringify(error));
+            res.status(400).write(JSON.stringify(error));
             res.end();
         }
         res.status(200).render('orders', {table: results_to_table(results, 3)})
@@ -139,7 +139,7 @@ app.get('/orders/:filter_column/:filter', (req, res) => {
     mysql_pool.query(`SELECT * FROM Orders WHERE ${filter_column} LIKE "${filter}%";`,
         function(error, results, fields) {
             if (error) {
-                res.write(JSON.stringify(error));
+                res.status(400).write(JSON.stringify(error));
                 res.end();
             }
             res.status(200).render('orders', {table: results_to_table(results, 3)})
@@ -150,7 +150,7 @@ app.get('/suppliers', (req, res) => {
     mysql_pool.query('SELECT * FROM Suppliers;',
     function(error, results, fields) {
         if (error) {
-            res.write(JSON.stringify(error));
+            res.status(400).write(JSON.stringify(error));
             res.end();
         }
         res.status(200).render('suppliers', {table: results_to_table(results, 2)})
@@ -163,7 +163,7 @@ app.get('/suppliers/:filter_column/:filter', (req, res) => {
     mysql_pool.query(`SELECT * FROM Suppliers WHERE ${filter_column} LIKE "${filter}%";`,
         function(error, results, fields) {
             if (error) {
-                res.write(JSON.stringify(error));
+                res.status(400).write(JSON.stringify(error));
                 res.end();
             }
             res.status(200).render('suppliers', {table: results_to_table(results, 2)})
@@ -174,7 +174,7 @@ app.get('/suppliers-goods', (req, res) => {
     mysql_pool.query('SELECT * FROM SupplierGoods;',
     function(error, results, fields) {
         if (error) {
-            res.write(JSON.stringify(error));
+            res.status(400).write(JSON.stringify(error));
             res.end();
         }
         res.status(200).render('suppliers-goods', {table: results_to_table(results, 2)})
@@ -187,7 +187,7 @@ app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
     mysql_pool.query(`SELECT * FROM SuppliersGoods WHERE ${filter_column} LIKE "${filter}%";`,
         function(error, results, fields) {
             if (error) {
-                res.write(JSON.stringify(error));
+                res.status(400).write(JSON.stringify(error));
                 res.end();
             }
             res.status(200).render('suppliers', {table: results_to_table(results, 2)})
@@ -207,9 +207,11 @@ app.post('/customer/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
     VALUES ('${add_first_name}', '${add_last_name}', '${add_dob}', '${add_amount_spent}');`,
     function(error, results, fields) {
         if (error) {
-            res.write(JSON.stringify(error));
+            res.status(400).write(JSON.stringify(error));
             res.end();
         }
+        res.status(200).write("Success!")
+        res.end()
     });
 });
 
@@ -223,9 +225,11 @@ app.post('/goods/:price/:location/:expiration_date', (req, res) => {
     VALUES ('${add_price}', '${add_location}', '${add_expiration_date}');`,
     function(error, results, fields) {
         if (error) {
-            res.write(JSON.stringify(error));
+            res.status(400).write(JSON.stringify(error));
             res.end();
         }
+        res.status(200).write("Success!")
+        res.end()
     });
 });
 
@@ -235,9 +239,11 @@ app.post('/orders/:purchase_date', (req, res) => {
     mysql_pool.query(`INSERT INTO Orders (orderPurchaseDate) VALUES ('${add_purchase_date}');`,
     function(error, results, fields) {
         if (error) {
-            res.write(JSON.stringify(error));
+            res.status(400).write(JSON.stringify(error));
             res.end();
         }
+        res.status(200).write("Success!")
+        res.end()
     });
 });
 
@@ -250,6 +256,8 @@ app.post('/suppliers/:supplier_name', (req, res) => {
             res.write(JSON.stringify(error));
             res.end();
         }
+        res.status(200).write("Success!")
+        res.end()
     });
 });
 
@@ -265,6 +273,8 @@ app.post('/remove/:table/:attribute/:id', (req, res) => {
                 res.write(JSON.stringify(error));
                 res.end();
             }
+            res.status(200).write("Success!")
+            res.end()
         });
 });
 
