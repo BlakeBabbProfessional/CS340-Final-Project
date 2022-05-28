@@ -68,12 +68,13 @@ document.getElementById('entity-update-button').addEventListener('click', () => 
     let url = `/goods/${inputGoodsID}/${inputPrice}/${inputLocation}/${inputExpirationDate}`
 
     req.open('POST', url)
+    req.addEventListener('load', (event) => {
+        if (event.target.status === 200) {
+            window.location.reload()
+        }
+    })
     req.setRequestHeader('Content-Type', 'application/sql')
     req.send()
-
-    setTimeout(() => {
-        window.location.reload()
-    }, 60)
 })
 
 let buttons = document.getElementsByName('entity-remove-button')

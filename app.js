@@ -253,7 +253,7 @@ app.post('/suppliers/:supplier_name', (req, res) => {
     mysql_pool.query(`INSERT INTO Suppliers (supplierName) VALUES ('${add_supplier_name}');`, 
     function(error, results, fields) {
         if (error) {
-            res.write(JSON.stringify(error));
+            res.status(400).write(JSON.stringify(error));
             res.end();
         }
         res.status(200).write("Success!")
@@ -270,7 +270,7 @@ app.post('/remove/:table/:attribute/:id', (req, res) => {
     mysql_pool.query(`DELETE FROM ${table} WHERE ${attribute} = ${id};`,
         function(error, results, fields) {
             if (error) {
-                res.write(JSON.stringify(error));
+                res.status(400).write(JSON.stringify(error));
                 res.end();
             }
             res.status(200).write("Success!")
@@ -292,9 +292,11 @@ app.post('/customer/:customer_id/:amount_spent/:first_name/:last_name/:dob', (re
     mysql_pool.query(`UPDATE Customers SET customerFirstName = '${update_first_name}', customerLastName = '${update_last_name}', customerDateOfBirth = '${update_dob}', customerTotalCost = '${update_amount_spent}' WHERE customerID = '${update_id}';`,
     function(error, results, fields) {
         if (error) {
-            res.write(JSON.stringify(error));
+            res.status(400).write(JSON.stringify(error));
             res.end();
         }
+        res.status(200).write("Success!")
+        res.end()
     });
 });
 
@@ -308,9 +310,11 @@ app.post('/goods/:goods_id/:price/:location/:expiration_date', (req, res) => {
     mysql_pool.query(`UPDATE Goods SET goodPrice = '${update_price}', goodLocationInStore = '${update_location}', goodExpirationDate = '${update_expiration_date}' WHERE itemID = '${update_id}';`,
     function(error, results, fields) {
         if (error) {
-            res.write(JSON.stringify(error));
+            res.status(400).write(JSON.stringify(error));
             res.end();
         }
+        res.status(200).write("Success!")
+        res.end()
     });
 });
 
@@ -322,9 +326,11 @@ app.post('/orders/:order_id/:purchase_date', (req, res) => {
     mysql_pool.query(`UPDATE Orders SET orderPurchaseDate = '${update_purchase_date}' WHERE orderID = '${update_id}';`,
     function(error, results, fields){
         if (error) {
-            res.write(JSON.stringify(error));
+            res.status(400).write(JSON.stringify(error));
             res.end();
         }
+        res.status(200).write("Success!")
+        res.end()
     });
 });
 
@@ -336,8 +342,10 @@ app.post('/suppliers/:supplier_id/:supplier_name', (req, res) => {
     mysql_pool.query(`UPDATE Suppliers SET supplierName = '${update_supplier_name}' WHERE supplierID = '${update_id}';`,
     function(error, results, fields){
         if (error) {
-            res.write(JSON.stringify(error));
+            res.status(400).write(JSON.stringify(error));
             res.end();
         }
+        res.status(200).write("Success!")
+        res.end()
     });
 });
