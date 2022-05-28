@@ -44,12 +44,13 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
     let url = `/customer/${inputAmountSpent}/${inputFirstName}/${inputLastName}/${inputDOB}`
 
     req.open('POST', url)
-    req.setRequestHeader('Content-Type', 'application/sql')
+    req.addEventListener('load', (event) => {
+        if (event.target.status === 200) {
+            window.location.reload()
+        }
+    })
+    req.setRequestHeader('Content-Type', 'application/json')
     req.send()
-
-    setTimeout(() => {
-        window.location.reload()
-    }, 60)
 })
 /*
 document.getElementById('entity-update-button').addEventListener('click', () => {

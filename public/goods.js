@@ -60,11 +60,12 @@ for (let i = 0; i < buttons.length; i++) {
         let url = `/remove/Goods/itemID/${e.target.id}/`
         
         req.open('POST', url)
+        req.addEventListener('load', (event) => {
+            if (event.target.status === 200) {
+                window.location.reload()
+            }
+        })
         req.setRequestHeader('Content-Type', 'application/sql')
         req.send()
-
-        setTimeout(() => {
-            window.location.reload()
-        }, 10)
     })
 }

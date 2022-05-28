@@ -35,12 +35,13 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
     let url = `/orders/${inputPurchaseDate}`
 
     req.open('POST', url)
+    req.addEventListener('load', (event) => {
+        if (event.target.status === 200) {
+            window.location.reload()
+        }
+    })
     req.setRequestHeader('Content-Type', 'application/sql')
     req.send()
-
-    setTimeout(() => {
-        window.location.reload()
-    }, 10)
 })
 
 let buttons = document.getElementsByName('entity-remove-button')
@@ -50,11 +51,12 @@ for (let i = 0; i < buttons.length; i++) {
         let url = `/remove/Orders/orderID/${e.target.id}/`
         
         req.open('POST', url)
+        req.addEventListener('load', (event) => {
+            if (event.target.status === 200) {
+                window.location.reload()
+            }
+        })
         req.setRequestHeader('Content-Type', 'application/sql')
         req.send()
-
-        setTimeout(() => {
-            window.location.reload()
-        }, 10)
     })
 }
