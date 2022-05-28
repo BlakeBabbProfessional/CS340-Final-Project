@@ -50,7 +50,30 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
 
     setTimeout(() => {
         window.location.reload()
-    }, 15)
+    }, 60)
+})
+
+document.getElementById('entity-update-button').addEventListener('click', () => {
+    let inputGoodsID = document.getElementById('entity-update-number').value
+    let inputPrice = document.getElementById('entity-price-update').value
+    let inputLocation = document.getElementById('entity-location-update').value
+    let inputExpirationDate = document.getElementById('entity-expiration-date-update').value
+
+    if (!inputGoodsID | !inputPrice | !inputLocation | !inputExpirationDate) {
+        window.location.href = '/goods'
+        return
+    }
+
+    let req = new XMLHttpRequest()
+    let url = `/goods/${inputGoodsID}/${inputPrice}/${inputLocation}/${inputExpirationDate}`
+
+    req.open('POST', url)
+    req.setRequestHeader('Content-Type', 'application/sql')
+    req.send()
+
+    setTimeout(() => {
+        window.location.reload()
+    }, 60)
 })
 
 let buttons = document.getElementsByName('entity-remove-button')

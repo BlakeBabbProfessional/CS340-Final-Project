@@ -65,7 +65,7 @@ INSERT INTO Orders (orderPurchaseDate)
 VALUES (:purchaseDateInput);
 
 UPDATE Orders
-SET orderPurcaseDate = :purchaseDateInput
+SET orderPurchaseDate = :purchaseDateInput
 WHERE orderID = :idInput;
 
 -- SupplierGoods

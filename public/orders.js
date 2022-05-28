@@ -43,6 +43,27 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
     }, 10)
 })
 
+document.getElementById('entity-update-button').addEventListener('click', () => {
+    let inputOrderID = document.getElementById('entity-update-number').value
+    let inputPurchaseDate = document.getElementById('entity-purchase-date-update').value
+
+    if (!inputOrderID | !inputPurchaseDate) {
+        window.location.href = '/orders'
+        return
+    }
+
+    let req = new XMLHttpRequest()
+    let url = `/orders/${inputOrderID}/${inputPurchaseDate}`
+
+    req.open('POST', url)
+    req.setRequestHeader('Content-Type', 'application/sql')
+    req.send()
+
+    setTimeout(() => {
+        window.location.reload()
+    }, 60)
+})
+
 let buttons = document.getElementsByName('entity-remove-button')
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', (e) => {

@@ -267,8 +267,11 @@ app.post('/remove/:table/:attribute/:id', (req, res) => {
             }
         });
 });
-/*
-// update a row
+
+
+//// update a row
+
+// customer
 app.post('/customer/:customer_id/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
     let update_id = req.params.customer_id
     let update_amount_spent = req.params.amount_spent
@@ -284,4 +287,47 @@ app.post('/customer/:customer_id/:amount_spent/:first_name/:last_name/:dob', (re
         }
     });
 });
-*/
+
+// goods
+app.post('/goods/:goods_id/:price/:location/:expiration_date', (req, res) => {
+    let update_id = req.params.goods_id
+    let update_price = req.params.price
+    let update_location = req.params.location
+    let update_expiration_date = req.params.expiration_date
+
+    mysql_pool.query(`UPDATE Goods SET goodPrice = '${update_price}', goodLocationInStore = '${update_location}', goodExpirationDate = '${update_expiration_date}' WHERE itemID = '${update_id}';`,
+    function(error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+    });
+});
+
+// orders
+app.post('/orders/:order_id/:purchase_date', (req, res) => {
+    let update_id = req.params.order_id
+    let update_purchase_date = req.params.purchase_date
+
+    mysql_pool.query(`UPDATE Orders SET orderPurchaseDate = '${update_purchase_date}' WHERE orderID = '${update_id}';`,
+    function(error, results, fields){
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+    });
+});
+
+// suppliers
+app.post('/suppliers/:supplier_id/:supplier_name', (req, res) => {
+    let update_id = req.params.supplier_id
+    let update_supplier_name = req.params.supplier_name
+
+    mysql_pool.query(`UPDATE Suppliers SET supplierName = '${update_supplier_name}' WHERE supplierID = '${update_id}';`,
+    function(error, results, fields){
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+    });
+});
