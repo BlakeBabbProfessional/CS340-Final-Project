@@ -202,7 +202,9 @@ app.post('/customer/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
     let add_last_name = req.params.last_name
     let add_dob = req.params.dob
 
-    mysql_pool.query(`INSERT INTO Customers (customerFirstName, customerLastName, customerDateOfBirth, customerTotalCost) VALUES ('${add_first_name}', '${add_last_name}', '${add_dob}', '${add_amount_spent}');`,
+    mysql_pool.query(`INSERT INTO Customers 
+    (customerFirstName, customerLastName, customerDateOfBirth, customerTotalCost) 
+    VALUES ('${add_first_name}', '${add_last_name}', '${add_dob}', '${add_amount_spent}');`,
     function(error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
@@ -216,7 +218,9 @@ app.post('/goods/:price/:location/:expiration_date', (req, res) => {
     let add_location = req.params.location
     let add_expiration_date = req.params.expiration_date
 
-    mysql_pool.query(`INSERT INTO Goods (goodPrice, goodLocationInStore, goodExpirationDate) VALUES ('${add_price}', '${add_location}', '${add_expiration_date}');`,
+    mysql_pool.query(`INSERT INTO Goods 
+    (goodPrice, goodLocationInStore, goodExpirationDate) 
+    VALUES ('${add_price}', '${add_location}', '${add_expiration_date}');`,
     function(error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
