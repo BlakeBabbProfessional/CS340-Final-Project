@@ -107,6 +107,38 @@ function results_to_select_order(results) {
     return select
 }
 
+function results_to_select_customer(results) {
+    // (id, firstname, lastname)
+    let columns = []
+    let number_of_columns = 3
+    let select = `<select name="customer-fk-input" id="customer-fk-input"> <option value = "NULL">none</option>`
+    if (!results) {return select}
+    for (let i = 0; i < number_of_columns; i++) {
+        columns.push(results.map(obj => Object.keys(obj).map(k => obj[k])[i]))
+    }
+    for (let i = 0; i < columns[0].length; i++) {
+        select += `<option value = "${columns[0][i]}">${columns[1][i]} ${columns[2][i]}</option>`
+    }
+    select += `</select>`
+    return select
+}
+
+function results_to_select_good(results) {
+    // (id, price, location)
+    let columns = []
+    let number_of_columns = 3
+    let select = `<select name="good-fk-input" id="good-fk-input"> <option value = "NULL">none</option>`
+    if (!results) {return select}
+    for (let i = 0; i < number_of_columns; i++) {
+        columns.push(results.map(obj => Object.keys(obj).map(k => obj[k])[i]))
+    }
+    for (let i = 0; i < columns[0].length; i++) {
+        select += `<option value = "${columns[0][i]}">$${columns[1][i]}, ${columns[2][i]}</option>`
+    }
+    select += `</select>`
+    return select
+}
+
 app.get('/customer', (req, res) => {
     mysql_pool.query('SELECT * FROM Customers;',
         function(error, results, fields) {
@@ -196,6 +228,15 @@ app.get('/goods/:filter_column/:filter', (req, res) => {
             tableResults = results
             complete()
         })
+    mysql_pool.query('SELECT orderID, orderPurchaseDate FROM Orders;',
+        function(error, results, fields) {
+            if (error) {
+                res.status(400).write(JSON.stringify(error));
+                res.end();
+            }
+            orderFkSelectResults = results
+            complete()
+    })
     mysql_pool.query('SELECT supplierID, supplierName FROM Suppliers;',
         function(error, results, fields) {
             if (error) {
@@ -204,41 +245,92 @@ app.get('/goods/:filter_column/:filter', (req, res) => {
             }
             supplierFkSelectResults = results
             complete()
-        })
+    })
 
     function complete() {
         callbackCount++;
-            if(callbackCount >= 2) {
-                res.status(200).render('goods', {
-                    table: results_to_table(tableResults, 6), 
-                    supplierFkSelect: results_to_select_supplier(supplierFkSelectResults)
-                });
-            }
+        if(callbackCount >= 3) {
+            res.status(200).render('goods', {
+                table: results_to_table(tableResults, 6), 
+                orderFkSelect: results_to_select_order(orderFkSelectResults),
+                supplierFkSelect: results_to_select_supplier(supplierFkSelectResults)
+            });
+        }
     }
 })
 
 app.get('/orders', (req, res) => {
-    mysql_pool.query('SELECT * FROM Orders;',
-    function(error, results, fields) {
-        if (error) {
-            res.status(400).write(JSON.stringify(error));
-            res.end();
-        }
-        res.status(200).render('orders', {table: results_to_table(results, 3)})
-    });  
-})
+    let callbackCount = 0
+    let tableResults
+    let customerFkSelectResults
 
-app.get('/orders/:filter_column/:filter', (req, res) => {
-    let filter_column = req.params.filter_column
-    let filter = req.params.filter
-    mysql_pool.query(`SELECT * FROM Orders WHERE ${filter_column} LIKE "${filter}%";`,
+    mysql_pool.query('SELECT * FROM Orders;',
         function(error, results, fields) {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
             }
-            res.status(200).render('orders', {table: results_to_table(results, 3)})
-    });
+            tableResults = results
+            complete()
+        })
+    mysql_pool.query('SELECT customerID, customerFirstName, customerLastName FROM Customers;',
+        function(error, results, fields) {
+            if (error) {
+                let e = JSON.stringify(error)
+                res.status(400).write(e)
+                res.end()
+            }
+            customerFkSelectResults = results
+            complete()
+        })
+
+    function complete() {
+        callbackCount++;
+        if(callbackCount >= 2) {
+            res.status(200).render('orders', {
+                table: results_to_table(tableResults, 3), 
+                customerFkSelect: results_to_select_customer(customerFkSelectResults),
+            });
+        }
+    }
+})
+
+app.get('/orders/:filter_column/:filter', (req, res) => {
+    let filter_column = req.params.filter_column
+    let filter = req.params.filter
+
+    let callbackCount = 0
+    let tableResults
+    let customerFkSelectResults
+
+    mysql_pool.query(`SELECT * FROM Orders WHERE ${filter_column} LIKE "${filter}%";`,
+    function(error, results, fields) {
+        if (error) {
+            res.status(400).write(JSON.stringify(error));
+            res.end();
+        }
+        tableResults = results
+        complete()
+    })
+    mysql_pool.query('SELECT customerID, customerFirstName, customerLastName FROM Customers;',
+        function(error, results, fields) {
+            if (error) {
+                res.status(400).write(JSON.stringify(error));
+                res.end();
+            }
+            customerFkSelectResults = results
+            complete()
+        })
+
+    function complete() {
+        callbackCount++;
+        if(callbackCount >= 2) {
+            res.status(200).render('orders', {
+                table: results_to_table(tableResults, 6), 
+                customerFkSelect: results_to_select_customer(customerFkSelectResults),
+        });
+    }
+}
 })
 
 app.get('/suppliers', (req, res) => {
@@ -266,14 +358,48 @@ app.get('/suppliers/:filter_column/:filter', (req, res) => {
 })
 
 app.get('/suppliers-goods', (req, res) => {
+    let callbackCount = 0
+    let tableResults
+    let supplierFkSelectResults
+    let goodFkSelectResults
+
     mysql_pool.query('SELECT * FROM SupplierGoods;',
+        function(error, results, fields) {
+            if (error) {
+                res.status(400).write(JSON.stringify(error));
+                res.end();
+            }
+            tableResults = results
+            complete()
+        })
+    mysql_pool.query('SELECT supplierID, supplierName FROM Suppliers;',
     function(error, results, fields) {
         if (error) {
             res.status(400).write(JSON.stringify(error));
             res.end();
         }
-        res.status(200).render('suppliers-goods', {table: results_to_table(results, 2)})
-    });  
+        supplierFkSelectResults = results
+        complete()
+    })
+    mysql_pool.query('SELECT itemID, goodPrice, goodLocationInStore FROM Goods;',
+    function(error, results, fields) {
+        if (error) {
+            res.status(400).write(JSON.stringify(error));
+            res.end();
+        }
+        goodFkSelectResults = results
+        complete()
+    })
+
+    function complete() {
+        callbackCount++;
+        if(callbackCount >= 3) {
+            res.status(200).render('suppliers-goods', {
+                table: results_to_table(tableResults, 2), 
+                supplierFkSelect: results_to_select_supplier(supplierFkSelectResults),
+                goodFkSelect: results_to_select_good(goodFkSelectResults)
+        });
+    }}
 })
 
 app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
@@ -323,7 +449,6 @@ app.post('/goods/:price/:location/:expiration_date/:order_key/:supplier_key', (r
     function(error, results, fields) {
         if (error) {
             let e = JSON.stringify(error)
-            console.log(e)
             res.status(400).write(e)
             res.end()
             return
@@ -333,13 +458,16 @@ app.post('/goods/:price/:location/:expiration_date/:order_key/:supplier_key', (r
     });
 });
 
-app.post('/orders/:purchase_date', (req, res) => {
+app.post('/orders/:purchase_date/:customer_key', (req, res) => {
     let add_purchase_date = req.params.purchase_date
+    let add_customer_key = req.params.customer_key
 
-    mysql_pool.query(`INSERT INTO Orders (orderPurchaseDate) VALUES ('${add_purchase_date}');`,
+    mysql_pool.query(`INSERT INTO Orders (orderPurchaseDate, customerID) VALUES ('${add_purchase_date}', ${add_customer_key});`,
     function(error, results, fields) {
         if (error) {
-            res.status(400).write(JSON.stringify(error));
+            let e = JSON.stringify(error)
+            console.log(e)
+            res.status(400).write(e);
             res.end();
         }
         res.status(200).write("Success!")
@@ -355,6 +483,23 @@ app.post('/suppliers/:supplier_name', (req, res) => {
         if (error) {
             res.status(400).write(JSON.stringify(error));
             res.end();
+        }
+        res.status(200).write("Success!")
+        res.end()
+    });
+});
+
+app.post('/suppliers-goods/:supplier_key/:good_key', (req, res) => {
+    let add_supplier_key = req.params.supplier_key
+    let add_good_key = req.params.good_key
+
+    mysql_pool.query(`INSERT INTO SupplierGoods (itemID, supplierID) VALUES (${add_supplier_key}, ${add_good_key});`, 
+    function(error, results, fields) {
+        if (error) {
+            let e = JSON.stringify(error)
+            console.log(e)
+            res.status(400).write(e)
+            res.end()
         }
         res.status(200).write("Success!")
         res.end()
