@@ -169,7 +169,10 @@ app.get('/goods', (req, res) => {
     let supplierFkSelectResults
     let orderFkSelectResults
 
-    mysql_pool.query(`SELECT * FROM Goods;`,
+    mysql_pool.query(`SELECT itemID, goodPrice, goodLocationInStore, goodExpirationDate, orderID, orderPurchaseDate, supplierID, supplierName
+    FROM Goods
+    JOIN Orders USING (orderID)
+    JOIN Suppliers USING (supplierID);`,
         function(error, results, fields) {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
@@ -203,7 +206,7 @@ app.get('/goods', (req, res) => {
         callbackCount++;
             if(callbackCount >= 3) {
                 res.status(200).render('goods', {
-                    table: results_to_table(tableResults, 6), 
+                    table: results_to_table(tableResults, 8), 
                     orderFkSelect: results_to_select_order(orderFkSelectResults),
                     supplierFkSelect: results_to_select_supplier(supplierFkSelectResults)
                 });
@@ -219,7 +222,7 @@ app.get('/goods/:filter_column/:filter', (req, res) => {
     let tableResults
     let supplierFkSelectResults
 
-    mysql_pool.query(`SELECT * FROM Goods WHERE ${filter_column} LIKE "${filter}%";`,
+    mysql_pool.query(`SELECT itemID, goodPrice, goodLocationInStore, goodExpirationDate, orderID, orderPurchaseDate, supplierID, supplierName FROM Goods JOIN Orders USING (orderID) JOIN Suppliers USING (supplierID) WHERE ${filter_column} LIKE "${filter}%";`,
         function(error, results, fields) {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
@@ -251,7 +254,7 @@ app.get('/goods/:filter_column/:filter', (req, res) => {
         callbackCount++;
         if(callbackCount >= 3) {
             res.status(200).render('goods', {
-                table: results_to_table(tableResults, 6), 
+                table: results_to_table(tableResults, 8), 
                 orderFkSelect: results_to_select_order(orderFkSelectResults),
                 supplierFkSelect: results_to_select_supplier(supplierFkSelectResults)
             });
@@ -264,7 +267,7 @@ app.get('/orders', (req, res) => {
     let tableResults
     let customerFkSelectResults
 
-    mysql_pool.query('SELECT * FROM Orders;',
+    mysql_pool.query('SELECT orderID, orderPurchaseDate, customerID, customerFirstName, customerLastName from Orders join Customers using (customerID);',
         function(error, results, fields) {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
@@ -288,7 +291,7 @@ app.get('/orders', (req, res) => {
         callbackCount++;
         if(callbackCount >= 2) {
             res.status(200).render('orders', {
-                table: results_to_table(tableResults, 3), 
+                table: results_to_table(tableResults, 5), 
                 customerFkSelect: results_to_select_customer(customerFkSelectResults),
             });
         }
@@ -303,7 +306,7 @@ app.get('/orders/:filter_column/:filter', (req, res) => {
     let tableResults
     let customerFkSelectResults
 
-    mysql_pool.query(`SELECT * FROM Orders WHERE ${filter_column} LIKE "${filter}%";`,
+    mysql_pool.query(`SELECT orderID, orderPurchaseDate, customerID, customerFirstName, customerLastName from Orders join Customers using (customerID) WHERE ${filter_column} LIKE "${filter}%";`,
     function(error, results, fields) {
         if (error) {
             res.status(400).write(JSON.stringify(error));
@@ -326,7 +329,7 @@ app.get('/orders/:filter_column/:filter', (req, res) => {
         callbackCount++;
         if(callbackCount >= 2) {
             res.status(200).render('orders', {
-                table: results_to_table(tableResults, 6), 
+                table: results_to_table(tableResults, 5), 
                 customerFkSelect: results_to_select_customer(customerFkSelectResults),
         });
     }
@@ -381,6 +384,7 @@ app.get('/suppliers-goods', (req, res) => {
         supplierFkSelectResults = results
         complete()
     })
+    // this query grabs the information for the Goods entity table - with joined tables Order and Suppliers
     mysql_pool.query('SELECT itemID, goodPrice, goodLocationInStore FROM Goods;',
     function(error, results, fields) {
         if (error) {
