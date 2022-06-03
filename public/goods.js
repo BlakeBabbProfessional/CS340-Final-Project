@@ -51,12 +51,16 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
     let url = `/goods/${inputPrice}/${inputLocation}/${inputExpirationDate}/${inputOrderKey}/${inputSupplierKey}`
 
     req.open('POST', url)
+    req.addEventListener('load', (event) => {
+        if (event.target.status === 200) {
+            window.location.reload()
+        }
+        if (event.target.status === 400) {
+            alert("invalid request")
+        }
+    })
     req.setRequestHeader('Content-Type', 'application/sql')
     req.send()
-
-    setTimeout(() => {
-        window.location.reload()
-    }, 60)
 })
 // redirects to a url which contain the parameters (the user input) - activated when user presses the filter button
 // to be received by GET

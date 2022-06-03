@@ -75,11 +75,14 @@ document.getElementById('entity-update-button').addEventListener('click', () => 
     req.addEventListener('load', (event) => {
         if (event.target.status === 200) {
             window.location.reload()
+        } 
+        if (event.target.status === 400) {
+            alert("invalid request")
         }
-    })
     req.setRequestHeader('Content-Type', 'application/sql')
     req.send()
-})
+})})
+
 // sends a req with the URL that contains the target ID
 let buttons = document.getElementsByName('entity-remove-button')
 for (let i = 0; i < buttons.length; i++) {

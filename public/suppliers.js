@@ -60,6 +60,9 @@ document.getElementById('entity-update-button').addEventListener('click', () => 
         if (event.target.status === 200) {
             window.location.reload()
         }
+        if (event.target.status === 400) {
+            alert("invalid request")
+        }
     })
     req.setRequestHeader('Content-Type', 'application/sql')
     req.send()
