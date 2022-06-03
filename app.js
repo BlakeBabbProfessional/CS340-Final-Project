@@ -57,6 +57,9 @@ app.get('/', (req, res) => {
     res.status(200).render('index')
 });
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//// Functions to convert raw results into html
+
 function results_to_table(results, number_of_columns) {
     let columns = []
     let table = ""
@@ -139,6 +142,10 @@ function results_to_select_good(results) {
     return select
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//// Selecting
+
+// customer, unfiltered
 app.get('/customer', (req, res) => {
     mysql_pool.query('SELECT * FROM Customers;',
         function(error, results, fields) {
@@ -150,6 +157,7 @@ app.get('/customer', (req, res) => {
     });    
 })
 
+// customer, filtered
 app.get('/customer/:filter_column/:filter', (req, res) => {
     let filter_column = req.params.filter_column
     let filter = req.params.filter
@@ -163,12 +171,14 @@ app.get('/customer/:filter_column/:filter', (req, res) => {
     });
 })
 
+// goods, unfiltered
 app.get('/goods', (req, res) => {
     let callbackCount = 0
     let tableResults
     let supplierFkSelectResults
     let orderFkSelectResults
 
+    // main table
     mysql_pool.query(`SELECT * FROM Goods;`,
         function(error, results, fields) {
             if (error) {
@@ -179,6 +189,7 @@ app.get('/goods', (req, res) => {
             complete()
     })
 
+    // order fk dropdown
     mysql_pool.query('SELECT orderID, orderPurchaseDate FROM Orders;',
         function(error, results, fields) {
             if (error) {
@@ -189,6 +200,7 @@ app.get('/goods', (req, res) => {
             complete()
     })
 
+    // supplier fk dropdown
     mysql_pool.query('SELECT supplierID, supplierName FROM Suppliers;',
         function(error, results, fields) {
             if (error) {
@@ -211,6 +223,7 @@ app.get('/goods', (req, res) => {
     }
 })
 
+// goods, filtered
 app.get('/goods/:filter_column/:filter', (req, res) => {
     let filter_column = req.params.filter_column
     let filter = req.params.filter
@@ -219,6 +232,7 @@ app.get('/goods/:filter_column/:filter', (req, res) => {
     let tableResults
     let supplierFkSelectResults
 
+    // main table
     mysql_pool.query(`SELECT * FROM Goods WHERE ${filter_column} LIKE "${filter}%";`,
         function(error, results, fields) {
             if (error) {
@@ -228,6 +242,7 @@ app.get('/goods/:filter_column/:filter', (req, res) => {
             tableResults = results
             complete()
         })
+    // order fk dropdown
     mysql_pool.query('SELECT orderID, orderPurchaseDate FROM Orders;',
         function(error, results, fields) {
             if (error) {
@@ -237,6 +252,7 @@ app.get('/goods/:filter_column/:filter', (req, res) => {
             orderFkSelectResults = results
             complete()
     })
+    // supplier dropdown
     mysql_pool.query('SELECT supplierID, supplierName FROM Suppliers;',
         function(error, results, fields) {
             if (error) {
@@ -259,11 +275,13 @@ app.get('/goods/:filter_column/:filter', (req, res) => {
     }
 })
 
+// orders, unfiltered
 app.get('/orders', (req, res) => {
     let callbackCount = 0
     let tableResults
     let customerFkSelectResults
 
+    // main table
     mysql_pool.query('SELECT * FROM Orders;',
         function(error, results, fields) {
             if (error) {
@@ -273,6 +291,7 @@ app.get('/orders', (req, res) => {
             tableResults = results
             complete()
         })
+    // customer fk dropdown
     mysql_pool.query('SELECT customerID, customerFirstName, customerLastName FROM Customers;',
         function(error, results, fields) {
             if (error) {
@@ -295,6 +314,7 @@ app.get('/orders', (req, res) => {
     }
 })
 
+// orders, filtered
 app.get('/orders/:filter_column/:filter', (req, res) => {
     let filter_column = req.params.filter_column
     let filter = req.params.filter
@@ -303,6 +323,7 @@ app.get('/orders/:filter_column/:filter', (req, res) => {
     let tableResults
     let customerFkSelectResults
 
+    // main table
     mysql_pool.query(`SELECT * FROM Orders WHERE ${filter_column} LIKE "${filter}%";`,
     function(error, results, fields) {
         if (error) {
@@ -312,6 +333,7 @@ app.get('/orders/:filter_column/:filter', (req, res) => {
         tableResults = results
         complete()
     })
+    // customer fk dropdown
     mysql_pool.query('SELECT customerID, customerFirstName, customerLastName FROM Customers;',
         function(error, results, fields) {
             if (error) {
@@ -333,6 +355,7 @@ app.get('/orders/:filter_column/:filter', (req, res) => {
 }
 })
 
+// suppliers, unfiltered
 app.get('/suppliers', (req, res) => {
     mysql_pool.query('SELECT * FROM Suppliers;',
     function(error, results, fields) {
@@ -344,6 +367,7 @@ app.get('/suppliers', (req, res) => {
     });  
 })
 
+// suppliers, filtered
 app.get('/suppliers/:filter_column/:filter', (req, res) => {
     let filter_column = req.params.filter_column
     let filter = req.params.filter
@@ -357,12 +381,14 @@ app.get('/suppliers/:filter_column/:filter', (req, res) => {
     });
 })
 
+// suppliers-goods, unfiltered
 app.get('/suppliers-goods', (req, res) => {
     let callbackCount = 0
     let tableResults
     let supplierFkSelectResults
     let goodFkSelectResults
 
+    // main table
     mysql_pool.query('SELECT * FROM SupplierGoods;',
         function(error, results, fields) {
             if (error) {
@@ -372,6 +398,7 @@ app.get('/suppliers-goods', (req, res) => {
             tableResults = results
             complete()
         })
+    // supplier fk dropdown
     mysql_pool.query('SELECT supplierID, supplierName FROM Suppliers;',
     function(error, results, fields) {
         if (error) {
@@ -381,6 +408,7 @@ app.get('/suppliers-goods', (req, res) => {
         supplierFkSelectResults = results
         complete()
     })
+    // good fk dropdown
     mysql_pool.query('SELECT itemID, goodPrice, goodLocationInStore FROM Goods;',
     function(error, results, fields) {
         if (error) {
@@ -402,21 +430,61 @@ app.get('/suppliers-goods', (req, res) => {
     }}
 })
 
+// suppliers-goods filtered
 app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
     let filter_column = req.params.filter_column
     let filter = req.params.filter
+
+    let callbackCount = 0
+    let tableResults
+    let supplierFkSelectResults
+    let goodFkSelectResults
+
     mysql_pool.query(`SELECT * FROM SuppliersGoods WHERE ${filter_column} LIKE "${filter}%";`,
-        function(error, results, fields) {
-            if (error) {
-                res.status(400).write(JSON.stringify(error));
-                res.end();
-            }
-            res.status(200).render('suppliers', {table: results_to_table(results, 2)})
-    });
+    function(error, results, fields) {
+        if (error) {
+            res.status(400).write(JSON.stringify(error));
+            res.end();
+        }
+        tableResults = results
+        complete()
+    })
+    // supplier fk dropdown
+    mysql_pool.query('SELECT supplierID, supplierName FROM Suppliers;',
+    function(error, results, fields) {
+        if (error) {
+            res.status(400).write(JSON.stringify(error));
+            res.end();
+        }
+        supplierFkSelectResults = results
+        complete()
+    })
+    // good fk dropdown
+    mysql_pool.query('SELECT itemID, goodPrice, goodLocationInStore FROM Goods;',
+    function(error, results, fields) {
+        if (error) {
+            res.status(400).write(JSON.stringify(error));
+            res.end();
+        }
+        goodFkSelectResults = results
+        complete()
+    })
+
+    function complete() {
+        callbackCount++;
+        if(callbackCount >= 3) {
+            res.status(200).render('suppliers-goods', {
+                table: results_to_table(tableResults, 2), 
+                supplierFkSelect: results_to_select_supplier(supplierFkSelectResults),
+                goodFkSelect: results_to_select_good(goodFkSelectResults)
+        });
+    }}
 })
 
-// inserting
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//// inserting
 
+// customer
 app.post('/customer/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
     let add_amount_spent = req.params.amount_spent
     let add_first_name = req.params.first_name
@@ -436,6 +504,7 @@ app.post('/customer/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
     });
 });
 
+// good
 app.post('/goods/:price/:location/:expiration_date/:order_key/:supplier_key', (req, res) => {
     let add_price = req.params.price
     let add_location = req.params.location
@@ -458,6 +527,7 @@ app.post('/goods/:price/:location/:expiration_date/:order_key/:supplier_key', (r
     });
 });
 
+// order
 app.post('/orders/:purchase_date/:customer_key', (req, res) => {
     let add_purchase_date = req.params.purchase_date
     let add_customer_key = req.params.customer_key
@@ -475,6 +545,7 @@ app.post('/orders/:purchase_date/:customer_key', (req, res) => {
     });
 });
 
+// supplier
 app.post('/suppliers/:supplier_name', (req, res) => {
     let add_supplier_name = req.params.supplier_name
 
@@ -489,6 +560,7 @@ app.post('/suppliers/:supplier_name', (req, res) => {
     });
 });
 
+// supplier-good
 app.post('/suppliers-goods/:supplier_key/:good_key', (req, res) => {
     let add_supplier_key = req.params.supplier_key
     let add_good_key = req.params.good_key
@@ -506,7 +578,9 @@ app.post('/suppliers-goods/:supplier_key/:good_key', (req, res) => {
     });
 });
 
-// remove a row
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//// Deleting
+
 app.post('/remove/:table/:attribute/:id', (req, res) => {        
     let table = req.params.table
     let attribute = req.params.attribute
@@ -523,8 +597,8 @@ app.post('/remove/:table/:attribute/:id', (req, res) => {
         });
 });
 
-
-//// update a row
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//// updating
 
 // customer
 app.post('/customer/:customer_id/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
