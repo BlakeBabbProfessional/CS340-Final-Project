@@ -23,7 +23,7 @@ CREATE TABLE Orders (
     orderPurchaseDate DATETIME NOT NULL,
     customerID INT(11),
     PRIMARY KEY (orderId),
-    FOREIGN KEY (customerID) REFERENCES Customers (customerID)
+    FOREIGN KEY (customerID) REFERENCES Customers (customerID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Goods (
@@ -34,7 +34,7 @@ CREATE TABLE Goods (
     supplierID INT(11),
     orderID INT(11),
     PRIMARY KEY (itemID),
-    FOREIGN KEY (orderID) REFERENCES Orders (orderID)
+    FOREIGN KEY (orderID) REFERENCES Orders (orderID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Suppliers (
@@ -47,8 +47,8 @@ CREATE TABLE SupplierGoods (
     itemID INT(11) NOT NULL,
     supplierID INT(11) NOT NULL,
     PRIMARY KEY (supplierID, itemID),
-    FOREIGN KEY (supplierID) REFERENCES Goods (itemID),
-    FOREIGN KEY (itemID) REFERENCES Suppliers (supplierID)
+    FOREIGN KEY (supplierID) REFERENCES Goods (itemID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (itemID) REFERENCES Suppliers (supplierID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Insert sample data
