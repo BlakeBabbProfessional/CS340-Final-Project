@@ -5,12 +5,11 @@ DROP TABLE IF EXISTS Suppliers;
 DROP TABLE IF EXISTS Goods;
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS SupplierGoods;
-SET FOREIGN_KEY_CHECKS = 1;
 
 -- Table creation
 
 CREATE TABLE Customers (
-    customerID INT(11) AUTO_INCREMENT NOT NULL,
+    customerID INT(11) AUTO_INCREMENT,
     customerFirstName VARCHAR(35) NOT NULL,
     customerLastName VARCHAR(35) NOT NULL,
     customerDateOfBirth DATE NOT NULL,
@@ -23,18 +22,22 @@ CREATE TABLE Orders (
     orderPurchaseDate DATETIME NOT NULL,
     customerID INT(11),
     PRIMARY KEY (orderId),
-    FOREIGN KEY (customerID) REFERENCES Customers (customerID) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (customerID) 
+        REFERENCES Customers (customerID)
+        ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Goods (
-    itemID INT(11) AUTO_INCREMENT NOT NULL,
+    itemID INT(11) AUTO_INCREMENT,
     goodPrice DECIMAL(11,2) NOT NULL,
     goodLocationInStore VARCHAR(15) NOT NULL,
-    goodExpirationDate date,
+    goodExpirationDate DATE,
     supplierID INT(11),
     orderID INT(11),
     PRIMARY KEY (itemID),
-    FOREIGN KEY (orderID) REFERENCES Orders (orderID) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (orderID) 
+        REFERENCES Orders (orderID)
+        ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Suppliers (
@@ -47,19 +50,23 @@ CREATE TABLE SupplierGoods (
     itemID INT(11) NOT NULL,
     supplierID INT(11) NOT NULL,
     PRIMARY KEY (supplierID, itemID),
-    FOREIGN KEY (supplierID) REFERENCES Goods (itemID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (itemID) REFERENCES Suppliers (supplierID) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (supplierID) 
+        REFERENCES Goods (itemID)
+        ON DELETE CASCADE,
+    FOREIGN KEY (itemID) 
+        REFERENCES Suppliers (supplierID)
+        ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Insert sample data
 
 -- Orders
-INSERT INTO Orders (orderPurchaseDate)
-    VALUES ('2022-05-13 05:01:59 PM'), ('2022-12-25 15:11:29 PM');
+INSERT INTO Orders (orderPurchaseDate, customerID)
+    VALUES ('2022-05-13 05:01:59 PM', 1), ('2022-12-25 15:11:29 PM', 2);
 
 -- Goods
-INSERT INTO Goods (goodPrice, goodLocationInStore, goodExpirationDate)
-    VALUES ('12.34', 'A5', '2022-05-18'), ('1.00', 'E10', '2024-10-06');
+INSERT INTO Goods (goodPrice, goodLocationInStore, goodExpirationDate, orderID, supplierID)
+    VALUES ('12.34', 'A5', '2022-05-18', 1, 2), ('1.00', 'E10', '2024-10-06', 2, 3);
 
 -- Customers
 INSERT INTO Customers (customerFirstName, customerLastName, customerDateOfBirth, customerTotalCost)
@@ -70,3 +77,9 @@ INSERT INTO Customers (customerFirstName, customerLastName, customerDateOfBirth,
 -- Suppliers
 INSERT INTO Suppliers (supplierName)
     VALUES ('Fruity Farms'), ('Mack''s Milk'), ('Super Soy');
+
+-- SupplierGoods
+INSERT INTO SupplierGoods (itemID, supplierID)
+    VALUES (1, 2), (2, 1);
+
+SET FOREIGN_KEY_CHECKS = 1;
