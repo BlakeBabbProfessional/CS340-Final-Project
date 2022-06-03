@@ -10,7 +10,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- Table creation
 
 CREATE TABLE Customers (
-    customerID INT(11) AUTO_INCREMENT,
+    customerID INT(11) AUTO_INCREMENT NOT NULL,
     customerFirstName VARCHAR(35) NOT NULL,
     customerLastName VARCHAR(35) NOT NULL,
     customerDateOfBirth DATE NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE Orders (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Goods (
-    itemID INT(11) AUTO_INCREMENT,
+    itemID INT(11) AUTO_INCREMENT NOT NULL,
     goodPrice DECIMAL(11,2) NOT NULL,
     goodLocationInStore VARCHAR(15) NOT NULL,
     goodExpirationDate date,
