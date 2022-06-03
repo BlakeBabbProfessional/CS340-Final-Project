@@ -78,7 +78,7 @@ document.getElementById('entity-update-button').addEventListener('click', () => 
         }
     req.setRequestHeader('Content-Type', 'application/sql')
     req.send()
-})
+})})
 
 let buttons = document.getElementsByName('entity-remove-button')
 for (let i = 0; i < buttons.length; i++) {

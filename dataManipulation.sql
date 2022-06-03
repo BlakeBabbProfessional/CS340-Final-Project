@@ -52,6 +52,11 @@ SET goodPrice = :priceInput,
     goodExpirationDate = :expirationDateInput
 WHERE goodID = :idInput;
 
+-- prints out the following attributes to the Goods entity table with the use of JOIN
+select itemID, goodPrice, goodLocationInStore, goodExpirationDate, orderID, orderPurchaseDate, supplierID, supplierName
+from Goods
+join Orders using (orderID)
+join Suppliers using (supplierID);
 
 -- Orders
 SELECT * FROM Orders;
@@ -67,6 +72,10 @@ VALUES (:purchaseDateInput);
 UPDATE Orders
 SET orderPurchaseDate = :purchaseDateInput
 WHERE orderID = :idInput;
+
+SELECT orderID, orderPurchaseDate, customerID, customerFirstName, customerLastName
+from Orders
+join Customers using (customerID);
 
 -- SupplierGoods
 SELECT * FROM SupplierGoods;

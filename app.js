@@ -77,7 +77,7 @@ function results_to_table(results, number_of_columns) {
     } 
     return table
 }
-
+    // converter function for suppliers (raw -> html)
 function results_to_select_supplier(results) {
     // (id, name)
     let columns = []
@@ -93,7 +93,7 @@ function results_to_select_supplier(results) {
     select += `</select>`
     return select
 }
-
+    // converter function for orders (raw -> html)
 function results_to_select_order(results) {
     // (id, date)
     let columns = []
@@ -109,7 +109,7 @@ function results_to_select_order(results) {
     select += `</select>`
     return select
 }
-
+    // converter function for customer (raw -> html)
 function results_to_select_customer(results) {
     // (id, firstname, lastname)
     let columns = []
@@ -125,7 +125,7 @@ function results_to_select_customer(results) {
     select += `</select>`
     return select
 }
-
+    // converter function for good (raw -> html)
 function results_to_select_good(results) {
     // (id, price, location)
     let columns = []
@@ -145,7 +145,7 @@ function results_to_select_good(results) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //// Selecting
 
-// customer, unfiltered
+// displays all attributes of customer, unfiltered version
 app.get('/customer', (req, res) => {
     mysql_pool.query('SELECT * FROM Customers;',
         function(error, results, fields) {
@@ -158,7 +158,7 @@ app.get('/customer', (req, res) => {
     });    
 })
 
-// customer, filtered
+// displays all attributes of customer, filtered based on user input
 app.get('/customer/:filter_column/:filter', (req, res) => {
     let filter_column = req.params.filter_column
     let filter = req.params.filter
@@ -179,9 +179,8 @@ app.get('/goods', (req, res) => {
     let tableResults
     let supplierFkSelectResults
     let orderFkSelectResults
-
-    // main table
-    mysql_pool.query(`SELECT * FROM Goods;`,
+    // displays relationship + main attributes of orders (orders and suppliers being joined)
+    mysql_pool.query(`SELECT itemID, goodPrice, goodLocationInStore, goodExpirationDate, orderID, orderPurchaseDate, supplierID, supplierName FROM Goods JOIN Orders USING (orderID) JOIN Suppliers USING (supplierID);`,
         function(error, results, fields) {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
@@ -216,11 +215,13 @@ app.get('/goods', (req, res) => {
             complete()
     })
 
+    // when a query is successful, increment until condition is met, then render the page with the JS object that has all the relevant data
+    // to display with handlebars and dropdowns
     function complete() {
         callbackCount++;
             if(callbackCount >= 3) {
                 res.status(200).render('goods', {
-                    table: results_to_table(tableResults, 6), 
+                    table: results_to_table(tableResults, 8), 
                     orderFkSelect: results_to_select_order(orderFkSelectResults),
                     supplierFkSelect: results_to_select_supplier(supplierFkSelectResults)
                 });
@@ -236,9 +237,8 @@ app.get('/goods/:filter_column/:filter', (req, res) => {
     let callbackCount = 0
     let tableResults
     let supplierFkSelectResults
-
-    // main table
-    mysql_pool.query(`SELECT * FROM Goods WHERE ${filter_column} LIKE "${filter}%";`,
+    // displays relationship + main attributes of goods (orders and suppliers being joined)
+    mysql_pool.query(`SELECT itemID, goodPrice, goodLocationInStore, goodExpirationDate, orderID, orderPurchaseDate, supplierID, supplierName FROM Goods JOIN Orders USING (orderID) JOIN Suppliers USING (supplierID) WHERE ${filter_column} LIKE "${filter}%";`,
         function(error, results, fields) {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
@@ -270,12 +270,13 @@ app.get('/goods/:filter_column/:filter', (req, res) => {
             supplierFkSelectResults = results
             complete()
     })
-
+    // when a query is successful, increment until condition is met, then render the page with the JS object that has all the relevant data
+    // to display with handlebars and dropdowns
     function complete() {
         callbackCount++;
         if(callbackCount >= 3) {
             res.status(200).render('goods', {
-                table: results_to_table(tableResults, 6), 
+                table: results_to_table(tableResults, 8), 
                 orderFkSelect: results_to_select_order(orderFkSelectResults),
                 supplierFkSelect: results_to_select_supplier(supplierFkSelectResults)
             });
@@ -289,8 +290,8 @@ app.get('/orders', (req, res) => {
     let tableResults
     let customerFkSelectResults
 
-    // main table
-    mysql_pool.query('SELECT * FROM Orders;',
+    // displays relationship + main attributes of orders (customers being joined)
+    mysql_pool.query('SELECT orderID, orderPurchaseDate, customerID, customerFirstName, customerLastName from Orders join Customers using (customerID);',
         function(error, results, fields) {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
@@ -313,18 +314,20 @@ app.get('/orders', (req, res) => {
             complete()
         })
 
+    // when a query is successful, increment until condition is met, then render the page with the JS object that has all the relevant data
+    // to display with handlebars and dropdowns
     function complete() {
         callbackCount++;
         if(callbackCount >= 2) {
             res.status(200).render('orders', {
-                table: results_to_table(tableResults, 3), 
+                table: results_to_table(tableResults, 5), 
                 customerFkSelect: results_to_select_customer(customerFkSelectResults),
             });
         }
     }
 })
 
-// orders, filtered
+// this part of the code handles the filtering functionality for orders
 app.get('/orders/:filter_column/:filter', (req, res) => {
     let filter_column = req.params.filter_column
     let filter = req.params.filter
@@ -333,8 +336,8 @@ app.get('/orders/:filter_column/:filter', (req, res) => {
     let tableResults
     let customerFkSelectResults
 
-    // main table
-    mysql_pool.query(`SELECT * FROM Orders WHERE ${filter_column} LIKE "${filter}%";`,
+    // displays core information as well as relevant relationship information to the user based on their filter input
+    mysql_pool.query(`SELECT orderID, orderPurchaseDate, customerID, customerFirstName, customerLastName from Orders join Customers using (customerID) WHERE ${filter_column} LIKE "${filter}%";`,
     function(error, results, fields) {
         if (error) {
             res.status(400).write(JSON.stringify(error));
@@ -344,7 +347,8 @@ app.get('/orders/:filter_column/:filter', (req, res) => {
         tableResults = results
         complete()
     })
-    // customer fk dropdown
+
+    // customer fk dropdown + update JK results
     mysql_pool.query('SELECT customerID, customerFirstName, customerLastName FROM Customers;',
         function(error, results, fields) {
             if (error) {
@@ -356,18 +360,20 @@ app.get('/orders/:filter_column/:filter', (req, res) => {
             complete()
         })
 
+    // when a query is successful, increment until condition is met, then render the page with the JS object that has all the relevant data
+    // to display with handlebars and dropdowns
     function complete() {
         callbackCount++;
         if(callbackCount >= 2) {
             res.status(200).render('orders', {
-                table: results_to_table(tableResults, 6), 
+                table: results_to_table(tableResults, 5), 
                 customerFkSelect: results_to_select_customer(customerFkSelectResults),
         });
     }
 }
 })
 
-// suppliers, unfiltered
+// renders the suppliers with all the relevant attributes, unfiltered
 app.get('/suppliers', (req, res) => {
     mysql_pool.query('SELECT * FROM Suppliers;',
     function(error, results, fields) {
@@ -380,7 +386,7 @@ app.get('/suppliers', (req, res) => {
     });  
 })
 
-// suppliers, filtered
+// displays all attributes of suppliers, filtered based on filter option
 app.get('/suppliers/:filter_column/:filter', (req, res) => {
     let filter_column = req.params.filter_column
     let filter = req.params.filter
@@ -420,6 +426,7 @@ app.get('/suppliers-goods', (req, res) => {
             tableResults = results
             complete()
         })
+
     // supplier fk dropdown
     mysql_pool.query('SELECT supplierID, supplierName FROM Suppliers;',
     function(error, results, fields) {
@@ -431,6 +438,8 @@ app.get('/suppliers-goods', (req, res) => {
         supplierFkSelectResults = results
         complete()
     })
+
+    // this query grabs the information for the Goods entity table - with joined tables Order and Suppliers
     // good fk dropdown
     mysql_pool.query('SELECT itemID, goodPrice, goodLocationInStore FROM Goods;',
     function(error, results, fields) {
@@ -443,6 +452,8 @@ app.get('/suppliers-goods', (req, res) => {
         complete()
     })
 
+    // when a query is successful, increment until condition is met, then render the page with the JS object that has all the relevant data
+    // to display with handlebars and dropdowns
     function complete() {
         callbackCount++;
         if(callbackCount >= 3) {
@@ -493,6 +504,7 @@ app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
         supplierFkSelectResults = results
         complete()
     })
+
     // good fk dropdown
     mysql_pool.query('SELECT itemID, goodPrice, goodLocationInStore FROM Goods;',
     function(error, results, fields) {
@@ -505,6 +517,8 @@ app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
         complete()
     })
 
+    // when a query is successful, increment until condition is met, then render the page with the JS object that has all the relevant data
+    // to display with handlebars and dropdowns
     function complete() {
         callbackCount++;
         if(callbackCount >= 3) {
@@ -519,7 +533,7 @@ app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //// inserting
 
-// customer
+// customer page // get parameters from the URL and execute the query with the input values
 app.post('/customer/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
     let add_amount_spent = req.params.amount_spent
     let add_first_name = req.params.first_name
@@ -540,7 +554,7 @@ app.post('/customer/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
     });
 });
 
-// good
+// good page // get parameters from the URL and execute the query with the input values
 app.post('/goods/:price/:location/:expiration_date/:order_key/:supplier_key', (req, res) => {
     let add_price = req.params.price
     let add_location = req.params.location
@@ -563,7 +577,7 @@ app.post('/goods/:price/:location/:expiration_date/:order_key/:supplier_key', (r
     });
 });
 
-// order
+// order page // get parameters from the URL and execute the query with the input values
 app.post('/orders/:purchase_date/:customer_key', (req, res) => {
     let add_purchase_date = req.params.purchase_date
     let add_customer_key = req.params.customer_key
@@ -582,7 +596,7 @@ app.post('/orders/:purchase_date/:customer_key', (req, res) => {
     });
 });
 
-// supplier
+// supplier page // get parameters from the URL and execute the query with the input values
 app.post('/suppliers/:supplier_name', (req, res) => {
     let add_supplier_name = req.params.supplier_name
 
@@ -598,7 +612,7 @@ app.post('/suppliers/:supplier_name', (req, res) => {
     });
 });
 
-// supplier-good
+// supplier-good page // get parameters from the URL and execute the query with the input values
 app.post('/suppliers-goods/:supplier_key/:good_key', (req, res) => {
     let add_supplier_key = req.params.supplier_key
     let add_good_key = req.params.good_key
@@ -619,7 +633,7 @@ app.post('/suppliers-goods/:supplier_key/:good_key', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //// Deleting
-
+// general case // removes a row from the table based on the ID
 app.post('/remove/:table/:attribute/:id', (req, res) => {        
     let table = req.params.table
     let attribute = req.params.attribute
@@ -640,7 +654,7 @@ app.post('/remove/:table/:attribute/:id', (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //// updating
 
-// customer
+// customer page // updates a row to the input values based on customer ID selected
 app.post('/customer/:customer_id/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
     let update_id = req.params.customer_id
     let update_amount_spent = req.params.amount_spent
@@ -660,7 +674,7 @@ app.post('/customer/:customer_id/:amount_spent/:first_name/:last_name/:dob', (re
     });
 });
 
-// goods
+// goods page // updates a row to the input values based on customer ID selected
 app.post('/goods/:goods_id/:price/:location/:expiration_date', (req, res) => {
     let update_id = req.params.goods_id
     let update_price = req.params.price
@@ -679,7 +693,7 @@ app.post('/goods/:goods_id/:price/:location/:expiration_date', (req, res) => {
     });
 });
 
-// orders
+// orders page // updates a row to the input values based on customer ID selected
 app.post('/orders/:order_id/:purchase_date', (req, res) => {
     let update_id = req.params.order_id
     let update_purchase_date = req.params.purchase_date
@@ -696,7 +710,7 @@ app.post('/orders/:order_id/:purchase_date', (req, res) => {
     });
 });
 
-// suppliers
+// suppliers page // updates a row to the input values based on customer ID selected
 app.post('/suppliers/:supplier_id/:supplier_name', (req, res) => {
     let update_id = req.params.supplier_id
     let update_supplier_name = req.params.supplier_name
