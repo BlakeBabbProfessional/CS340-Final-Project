@@ -24,11 +24,11 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
     console.log("do something")
     let selectSupplierFk = document.getElementById('supplier-fk-input')
     let inputSupplierKey = selectSupplierFk.options[selectSupplierFk.selectedIndex].value
-    let selectOrderFk = document.getElementById('order-fk-input')
-    let inputOrderKey = selectOrderFk.options[selectOrderFk.selectedIndex].value
+    let selectGoodFk = document.getElementById('good-fk-input')
+    let inputGoodKey = selectGoodFk.options[selectGoodFk.selectedIndex].value
 
     let req = new XMLHttpRequest()
-    let url = `/suppliers-goods/${inputSupplierKey}/${inputOrderKey}`
+    let url = `/suppliers-goods/${inputSupplierKey}/${inputGoodKey}`
 
     req.open('POST', url)
     req.addEventListener('load', (event) => {

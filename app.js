@@ -85,7 +85,7 @@ function results_to_select_supplier(results) {
         columns.push(results.map(obj => Object.keys(obj).map(k => obj[k])[i]))
     }
     for (let i = 0; i < columns[0].length; i++) {
-        select += `<option value = "${columns[0][i]}">${columns[1][i]}</option>`
+        select += `<option value = "${columns[0][i]}">${columns[1][i]} (${columns[0][i]})</option>`
     }
     select += `</select>`
     return select
@@ -101,7 +101,7 @@ function results_to_select_order(results) {
         columns.push(results.map(obj => Object.keys(obj).map(k => obj[k])[i]))
     }
     for (let i = 0; i < columns[0].length; i++) {
-        select += `<option value = "${columns[0][i]}">${columns[1][i]}</option>`
+        select += `<option value = "${columns[0][i]}">${columns[1][i]} (${columns[0][i]})</option>`
     }
     select += `</select>`
     return select
@@ -117,7 +117,7 @@ function results_to_select_customer(results) {
         columns.push(results.map(obj => Object.keys(obj).map(k => obj[k])[i]))
     }
     for (let i = 0; i < columns[0].length; i++) {
-        select += `<option value = "${columns[0][i]}">${columns[1][i]} ${columns[2][i]}</option>`
+        select += `<option value = "${columns[0][i]}">${columns[1][i]} ${columns[2][i]} (${columns[0][i]})</option>`
     }
     select += `</select>`
     return select
@@ -133,7 +133,7 @@ function results_to_select_good(results) {
         columns.push(results.map(obj => Object.keys(obj).map(k => obj[k])[i]))
     }
     for (let i = 0; i < columns[0].length; i++) {
-        select += `<option value = "${columns[0][i]}">$${columns[1][i]}, ${columns[2][i]}</option>`
+        select += `<option value = "${columns[0][i]}">$${columns[1][i]}, ${columns[2][i]} (${columns[0][i]})</option>`
     }
     select += `</select>`
     return select
