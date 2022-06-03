@@ -69,12 +69,13 @@ document.getElementById('entity-update-button').addEventListener('click', () => 
     let url = `/customer/${inputCustomerID}/${inputAmountSpent}/${inputFirstName}/${inputLastName}/${inputDOB}`
 
     req.open('POST', url)
+    req.addEventListener('load', (event) => {
+        if (event.target.status === 200) {
+            window.location.reload()
+        }
+    })
     req.setRequestHeader('Content-Type', 'application/sql')
     req.send()
-
-    setTimeout(() => {
-        window.location.reload()
-    }, 60)
 })
 
 let buttons = document.getElementsByName('entity-remove-button')
@@ -84,11 +85,12 @@ for (let i = 0; i < buttons.length; i++) {
         let url = `/remove/Customers/customerID/${e.target.id}/`
         
         req.open('POST', url)
+        req.addEventListener('load', (event) => {
+            if (event.target.status === 200) {
+                window.location.reload()
+            }
+        })
         req.setRequestHeader('Content-Type', 'application/sql')
         req.send()
-
-        setTimeout(() => {
-            window.location.reload()
-        }, 10)
     })
 }

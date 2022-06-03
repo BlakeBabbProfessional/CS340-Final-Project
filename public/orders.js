@@ -25,6 +25,8 @@ document.getElementById('entity-filter-button').addEventListener('click', () => 
 
 document.getElementById('entity-add-button').addEventListener('click', () => {
     let inputPurchaseDate = document.getElementById('entity-purchase-date-text').value
+    let selectCustomerFk = document.getElementById('customer-fk-input')
+    let inputCustomerKey = selectCustomerFk.options[selectCustomerFk.selectedIndex].value
 
     if (!inputPurchaseDate) {
         window.location.href = '/orders'
@@ -32,7 +34,7 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
     }
 
     let req = new XMLHttpRequest()
-    let url = `/orders/${inputPurchaseDate}`
+    let url = `/orders/${inputPurchaseDate}/${inputCustomerKey}`
 
     req.open('POST', url)
     req.addEventListener('load', (event) => {
@@ -57,12 +59,13 @@ document.getElementById('entity-update-button').addEventListener('click', () => 
     let url = `/orders/${inputOrderID}/${inputPurchaseDate}`
 
     req.open('POST', url)
+    req.addEventListener('load', (event) => {
+        if (event.target.status === 200) {
+            window.location.reload()
+        }
+    })
     req.setRequestHeader('Content-Type', 'application/sql')
     req.send()
-
-    setTimeout(() => {
-        window.location.reload()
-    }, 60)
 })
 
 let buttons = document.getElementsByName('entity-remove-button')
