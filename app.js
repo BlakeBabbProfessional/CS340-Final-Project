@@ -82,7 +82,7 @@ function results_to_select_supplier(results) {
     // (id, name)
     let columns = []
     let number_of_columns = 2
-    let select = `<select name="supplier-fk-input" id="supplier-fk-input"> <option value = "NULL">none</option>`
+    let select = `<select name="supplier-fk-input" id="supplier-fk-input">`
     if (!results) {return select}
     for (let i = 0; i < number_of_columns; i++) {
         columns.push(results.map(obj => Object.keys(obj).map(k => obj[k])[i]))
@@ -130,7 +130,7 @@ function results_to_select_good(results) {
     // (id, price, location)
     let columns = []
     let number_of_columns = 3
-    let select = `<select name="good-fk-input" id="good-fk-input"> <option value = "NULL">none</option>`
+    let select = `<select name="good-fk-input" id="good-fk-input">`
     if (!results) {return select}
     for (let i = 0; i < number_of_columns; i++) {
         columns.push(results.map(obj => Object.keys(obj).map(k => obj[k])[i]))
@@ -152,6 +152,7 @@ app.get('/customer', (req, res) => {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
+                return
             }
             res.status(200).render('customer', {table: results_to_table(results, 5)})
     });    
@@ -166,6 +167,7 @@ app.get('/customer/:filter_column/:filter', (req, res) => {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
+                return
             }
             res.status(200).render('customer', {table: results_to_table(results, 5)})
     });
@@ -184,6 +186,7 @@ app.get('/goods', (req, res) => {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
+                return
             }
             tableResults = results
             complete()
@@ -195,6 +198,7 @@ app.get('/goods', (req, res) => {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
+                return
             }
             orderFkSelectResults = results
             complete()
@@ -206,6 +210,7 @@ app.get('/goods', (req, res) => {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
+                return
             }
             supplierFkSelectResults = results
             complete()
@@ -238,6 +243,7 @@ app.get('/goods/:filter_column/:filter', (req, res) => {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
+                return
             }
             tableResults = results
             complete()
@@ -248,6 +254,7 @@ app.get('/goods/:filter_column/:filter', (req, res) => {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
+                return
             }
             orderFkSelectResults = results
             complete()
@@ -258,6 +265,7 @@ app.get('/goods/:filter_column/:filter', (req, res) => {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
+                return
             }
             supplierFkSelectResults = results
             complete()
@@ -287,6 +295,7 @@ app.get('/orders', (req, res) => {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
+                return
             }
             tableResults = results
             complete()
@@ -298,6 +307,7 @@ app.get('/orders', (req, res) => {
                 let e = JSON.stringify(error)
                 res.status(400).write(e)
                 res.end()
+                return
             }
             customerFkSelectResults = results
             complete()
@@ -329,6 +339,7 @@ app.get('/orders/:filter_column/:filter', (req, res) => {
         if (error) {
             res.status(400).write(JSON.stringify(error));
             res.end();
+            return
         }
         tableResults = results
         complete()
@@ -339,6 +350,7 @@ app.get('/orders/:filter_column/:filter', (req, res) => {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
+                return
             }
             customerFkSelectResults = results
             complete()
@@ -362,6 +374,7 @@ app.get('/suppliers', (req, res) => {
         if (error) {
             res.status(400).write(JSON.stringify(error));
             res.end();
+            return
         }
         res.status(200).render('suppliers', {table: results_to_table(results, 2)})
     });  
@@ -376,6 +389,7 @@ app.get('/suppliers/:filter_column/:filter', (req, res) => {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
+                return
             }
             res.status(200).render('suppliers', {table: results_to_table(results, 2)})
     });
@@ -388,12 +402,20 @@ app.get('/suppliers-goods', (req, res) => {
     let supplierFkSelectResults
     let goodFkSelectResults
 
+    let sql = `
+        select Goods.itemID, goodPrice, goodLocationInStore, SupplierGoods.supplierID, supplierName
+        from SupplierGoods
+        join Goods on SupplierGoods.itemID = Goods.itemID
+        join Suppliers on Suppliers.supplierID = SupplierGoods.supplierID;
+    `
+
     // main table
-    mysql_pool.query('SELECT * FROM SupplierGoods;',
+    mysql_pool.query(sql,
         function(error, results, fields) {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
+                return
             }
             tableResults = results
             complete()
@@ -404,6 +426,7 @@ app.get('/suppliers-goods', (req, res) => {
         if (error) {
             res.status(400).write(JSON.stringify(error));
             res.end();
+            return
         }
         supplierFkSelectResults = results
         complete()
@@ -414,6 +437,7 @@ app.get('/suppliers-goods', (req, res) => {
         if (error) {
             res.status(400).write(JSON.stringify(error));
             res.end();
+            return
         }
         goodFkSelectResults = results
         complete()
@@ -423,7 +447,7 @@ app.get('/suppliers-goods', (req, res) => {
         callbackCount++;
         if(callbackCount >= 3) {
             res.status(200).render('suppliers-goods', {
-                table: results_to_table(tableResults, 2), 
+                table: results_to_table(tableResults, 5), 
                 supplierFkSelect: results_to_select_supplier(supplierFkSelectResults),
                 goodFkSelect: results_to_select_good(goodFkSelectResults)
         });
@@ -440,21 +464,31 @@ app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
     let supplierFkSelectResults
     let goodFkSelectResults
 
-    mysql_pool.query(`SELECT * FROM SuppliersGoods WHERE ${filter_column} LIKE "${filter}%";`,
-    function(error, results, fields) {
-        if (error) {
-            res.status(400).write(JSON.stringify(error));
-            res.end();
-        }
-        tableResults = results
-        complete()
-    })
+    let sql = `
+        select Goods.itemID, goodPrice, goodLocationInStore, SupplierGoods.supplierID, supplierName
+        from SupplierGoods
+        join Goods on SupplierGoods.itemID = Goods.itemID
+        join Suppliers on Suppliers.supplierID = SupplierGoods.supplierID
+        where ${filter_column} like "${filter}%";
+    `
+
+    mysql_pool.query(sql,
+        function(error, results, fields) {
+            if (error) {
+                res.status(400).write(JSON.stringify(error));
+                res.end();
+                return
+            }
+            tableResults = results
+            complete()
+        })
     // supplier fk dropdown
     mysql_pool.query('SELECT supplierID, supplierName FROM Suppliers;',
     function(error, results, fields) {
         if (error) {
             res.status(400).write(JSON.stringify(error));
             res.end();
+            return
         }
         supplierFkSelectResults = results
         complete()
@@ -465,6 +499,7 @@ app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
         if (error) {
             res.status(400).write(JSON.stringify(error));
             res.end();
+            return
         }
         goodFkSelectResults = results
         complete()
@@ -474,7 +509,7 @@ app.get('/suppliers-goods/:filter_column/:filter', (req, res) => {
         callbackCount++;
         if(callbackCount >= 3) {
             res.status(200).render('suppliers-goods', {
-                table: results_to_table(tableResults, 2), 
+                table: results_to_table(tableResults, 5), 
                 supplierFkSelect: results_to_select_supplier(supplierFkSelectResults),
                 goodFkSelect: results_to_select_good(goodFkSelectResults)
         });
@@ -498,6 +533,7 @@ app.post('/customer/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
         if (error) {
             res.status(400).write(JSON.stringify(error));
             res.end();
+            return
         }
         res.status(200).write("Success!")
         res.end()
@@ -539,6 +575,7 @@ app.post('/orders/:purchase_date/:customer_key', (req, res) => {
             console.log(e)
             res.status(400).write(e);
             res.end();
+            return
         }
         res.status(200).write("Success!")
         res.end()
@@ -554,6 +591,7 @@ app.post('/suppliers/:supplier_name', (req, res) => {
         if (error) {
             res.status(400).write(JSON.stringify(error));
             res.end();
+            return
         }
         res.status(200).write("Success!")
         res.end()
@@ -565,13 +603,14 @@ app.post('/suppliers-goods/:supplier_key/:good_key', (req, res) => {
     let add_supplier_key = req.params.supplier_key
     let add_good_key = req.params.good_key
 
-    mysql_pool.query(`INSERT INTO SupplierGoods (itemID, supplierID) VALUES (${add_supplier_key}, ${add_good_key});`, 
+    mysql_pool.query(`INSERT INTO SupplierGoods (itemID, supplierID) VALUES (${add_good_key}, ${add_supplier_key});`, 
     function(error, results, fields) {
         if (error) {
             let e = JSON.stringify(error)
             console.log(e)
             res.status(400).write(e)
             res.end()
+            return
         }
         res.status(200).write("Success!")
         res.end()
@@ -591,6 +630,7 @@ app.post('/remove/:table/:attribute/:id', (req, res) => {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
+                return
             }
             res.status(200).write("Success!")
             res.end()
@@ -613,6 +653,7 @@ app.post('/customer/:customer_id/:amount_spent/:first_name/:last_name/:dob', (re
         if (error) {
             res.status(400).write(JSON.stringify(error));
             res.end();
+            return
         }
         res.status(200).write("Success!")
         res.end()
@@ -631,6 +672,7 @@ app.post('/goods/:goods_id/:price/:location/:expiration_date', (req, res) => {
         if (error) {
             res.status(400).write(JSON.stringify(error));
             res.end();
+            return
         }
         res.status(200).write("Success!")
         res.end()
@@ -647,6 +689,7 @@ app.post('/orders/:order_id/:purchase_date', (req, res) => {
         if (error) {
             res.status(400).write(JSON.stringify(error));
             res.end();
+            return
         }
         res.status(200).write("Success!")
         res.end()
@@ -663,6 +706,7 @@ app.post('/suppliers/:supplier_id/:supplier_name', (req, res) => {
         if (error) {
             res.status(400).write(JSON.stringify(error));
             res.end();
+            return
         }
         res.status(200).write("Success!")
         res.end()
