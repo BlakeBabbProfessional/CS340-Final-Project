@@ -30,6 +30,7 @@ let mysql_pool = mysql.createPool({
 // load the "express" module
 let express = require('express');
 const { table } = require('console');
+const { isContext } = require('vm');
 
 // create the Express application object
 let app = express();
@@ -57,7 +58,7 @@ app.get('/', (req, res) => {
 });
 
 function results_to_table(results, number_of_columns) {
-    columns = []
+    let columns = []
     let table = ""
     if (!results) {return table}
     for (let i = 0; i < number_of_columns; i++) {
@@ -72,6 +73,38 @@ function results_to_table(results, number_of_columns) {
         table += `<td><button name="entity-remove-button" id=${columns[0][i]}>remove</button></td>`
     } 
     return table
+}
+
+function results_to_select_supplier(results) {
+    // (id, name)
+    let columns = []
+    let number_of_columns = 2
+    let select = `<select name="supplier-fk-input" id="supplier-fk-input"> <option value = "NULL">none</option>`
+    if (!results) {return select}
+    for (let i = 0; i < number_of_columns; i++) {
+        columns.push(results.map(obj => Object.keys(obj).map(k => obj[k])[i]))
+    }
+    for (let i = 0; i < columns[0].length; i++) {
+        select += `<option value = "${columns[0][i]}">${columns[1][i]}</option>`
+    }
+    select += `</select>`
+    return select
+}
+
+function results_to_select_order(results) {
+    // (id, date)
+    let columns = []
+    let number_of_columns = 2
+    let select = `<select name="order-fk-input" id="order-fk-input"> <option value = "NULL">none</option>`
+    if (!results) {return select}
+    for (let i = 0; i < number_of_columns; i++) {
+        columns.push(results.map(obj => Object.keys(obj).map(k => obj[k])[i]))
+    }
+    for (let i = 0; i < columns[0].length; i++) {
+        select += `<option value = "${columns[0][i]}">${columns[1][i]}</option>`
+    }
+    select += `</select>`
+    return select
 }
 
 app.get('/customer', (req, res) => {
@@ -99,27 +132,89 @@ app.get('/customer/:filter_column/:filter', (req, res) => {
 })
 
 app.get('/goods', (req, res) => {
-    mysql_pool.query('SELECT * FROM Goods;',
+    let callbackCount = 0
+    let tableResults
+    let supplierFkSelectResults
+    let orderFkSelectResults
+
+    mysql_pool.query(`SELECT * FROM Goods;`,
         function(error, results, fields) {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
             }
-            res.status(200).render('goods', {table: results_to_table(results, 6)})
-    });  
+            tableResults = results
+            complete()
+    })
+
+    mysql_pool.query('SELECT orderID, orderPurchaseDate FROM Orders;',
+        function(error, results, fields) {
+            if (error) {
+                res.status(400).write(JSON.stringify(error));
+                res.end();
+            }
+            orderFkSelectResults = results
+            complete()
+    })
+
+    mysql_pool.query('SELECT supplierID, supplierName FROM Suppliers;',
+        function(error, results, fields) {
+            if (error) {
+                res.status(400).write(JSON.stringify(error));
+                res.end();
+            }
+            supplierFkSelectResults = results
+            complete()
+    })
+
+    function complete() {
+        callbackCount++;
+            if(callbackCount >= 3) {
+                res.status(200).render('goods', {
+                    table: results_to_table(tableResults, 6), 
+                    orderFkSelect: results_to_select_order(orderFkSelectResults),
+                    supplierFkSelect: results_to_select_supplier(supplierFkSelectResults)
+                });
+            }
+    }
 })
 
 app.get('/goods/:filter_column/:filter', (req, res) => {
     let filter_column = req.params.filter_column
     let filter = req.params.filter
+
+    let callbackCount = 0
+    let tableResults
+    let supplierFkSelectResults
+
     mysql_pool.query(`SELECT * FROM Goods WHERE ${filter_column} LIKE "${filter}%";`,
         function(error, results, fields) {
             if (error) {
                 res.status(400).write(JSON.stringify(error));
                 res.end();
             }
-            res.status(200).render('goods', {table: results_to_table(results, 6)})
-    });
+            tableResults = results
+            complete()
+        })
+    mysql_pool.query('SELECT supplierID, supplierName FROM Suppliers;',
+        function(error, results, fields) {
+            if (error) {
+                res.status(400).write(JSON.stringify(error));
+                res.end();
+            }
+            supplierFkSelectResults = results
+            complete()
+        })
+
+    function complete() {
+        callbackCount++;
+            if(callbackCount >= 2) {
+                res.status(200).render('goods', {
+                    table: results_to_table(tableResults, 6), 
+                    supplierFkSelect: results_to_select_supplier(supplierFkSelectResults)
+                });
+            }
+    }
 })
 
 app.get('/orders', (req, res) => {
@@ -215,18 +310,23 @@ app.post('/customer/:amount_spent/:first_name/:last_name/:dob', (req, res) => {
     });
 });
 
-app.post('/goods/:price/:location/:expiration_date', (req, res) => {
+app.post('/goods/:price/:location/:expiration_date/:order_key/:supplier_key', (req, res) => {
     let add_price = req.params.price
     let add_location = req.params.location
     let add_expiration_date = req.params.expiration_date
+    let add_order_key = req.params.order_key
+    let add_supplier_key = req.params.supplier_key
 
     mysql_pool.query(`INSERT INTO Goods 
-    (goodPrice, goodLocationInStore, goodExpirationDate) 
-    VALUES ('${add_price}', '${add_location}', '${add_expiration_date}');`,
+    (goodPrice, goodLocationInStore, goodExpirationDate, orderID, supplierID) 
+    VALUES ('${add_price}', '${add_location}', '${add_expiration_date}', ${add_order_key}, ${add_supplier_key});`,
     function(error, results, fields) {
         if (error) {
-            res.status(400).write(JSON.stringify(error));
-            res.end();
+            let e = JSON.stringify(error)
+            console.log(e)
+            res.status(400).write(e)
+            res.end()
+            return
         }
         res.status(200).write("Success!")
         res.end()

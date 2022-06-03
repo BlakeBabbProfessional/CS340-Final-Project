@@ -35,6 +35,10 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
     let inputPrice = document.getElementById('entity-price-text').value
     let inputLocation = document.getElementById('entity-location-text').value
     let inputExpirationDate = document.getElementById('entity-expiration-date-text').value
+    let selectOrderFk = document.getElementById('order-fk-input')
+    let inputOrderKey = selectOrderFk.options[selectOrderFk.selectedIndex].value
+    let selectSupplierFk = document.getElementById('supplier-fk-input')
+    let inputSupplierKey = selectSupplierFk.options[selectSupplierFk.selectedIndex].value
 
     if (!inputPrice | !inputLocation | !inputExpirationDate) {
         window.location.href = '/goods'
@@ -42,7 +46,7 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
     }
 
     let req = new XMLHttpRequest()
-    let url = `/goods/${inputPrice}/${inputLocation}/${inputExpirationDate}`
+    let url = `/goods/${inputPrice}/${inputLocation}/${inputExpirationDate}/${inputOrderKey}/${inputSupplierKey}`
 
     req.open('POST', url)
     req.setRequestHeader('Content-Type', 'application/sql')
