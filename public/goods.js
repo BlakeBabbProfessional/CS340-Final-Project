@@ -1,3 +1,4 @@
+// redirects to a url which contain the parameters (the user input) - activated when user presses the filter button
 document.getElementById('entity-filter-button').addEventListener('click', () => {
     let filterText = document.getElementById('entity-filter-input').value
     let filterColumnOption = document.getElementById('filter-dropdown-goods').selectedIndex
@@ -30,7 +31,8 @@ document.getElementById('entity-filter-button').addEventListener('click', () => 
 
     window.location.href = `/goods/${filterColumn}/${filterText}`
 })
-
+// redirects to a url which contain the parameters (the user input) - activated when user presses the add button
+// to be received by GET
 document.getElementById('entity-add-button').addEventListener('click', () => {
     let inputPrice = document.getElementById('entity-price-text').value
     let inputLocation = document.getElementById('entity-location-text').value
@@ -56,7 +58,8 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
         window.location.reload()
     }, 60)
 })
-
+// redirects to a url which contain the parameters (the user input) - activated when user presses the filter button
+// to be received by GET
 document.getElementById('entity-update-button').addEventListener('click', () => {
     let inputGoodsID = document.getElementById('entity-update-number').value
     let inputPrice = document.getElementById('entity-price-update').value
@@ -81,6 +84,7 @@ document.getElementById('entity-update-button').addEventListener('click', () => 
     req.send()
 })
 
+// sends a req with the URL that contains the target ID
 let buttons = document.getElementsByName('entity-remove-button')
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', (e) => {

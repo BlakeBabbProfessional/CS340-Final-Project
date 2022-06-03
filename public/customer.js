@@ -1,3 +1,4 @@
+// redirects to a url which contain the parameters (the user input) - activated when user presses the filter button
 document.getElementById('entity-filter-button').addEventListener('click', () => {
     let filterText = document.getElementById('entity-filter-input').value
     let filterColumnOption = document.getElementById('filter-dropdown-customers').selectedIndex
@@ -28,8 +29,9 @@ document.getElementById('entity-filter-button').addEventListener('click', () => 
 
     window.location.href = `/customer/${filterColumn}/${filterText}`
 })
-
-document.getElementById('entity-add-button').addEventListener('click', () => {
+// redirects to a url which contain the parameters (the user input) - activated when user presses the add button
+// to be received by GET
+    document.getElementById('entity-add-button').addEventListener('click', () => {
     let inputAmountSpent = document.getElementById('entity-amount-spent-text').value
     let inputFirstName = document.getElementById('entity-first-name-text').value
     let inputLastName = document.getElementById('entity-last-name-text').value
@@ -52,7 +54,8 @@ document.getElementById('entity-add-button').addEventListener('click', () => {
     req.setRequestHeader('Content-Type', 'application/json')
     req.send()
 })
-
+// redirects to a url which contain the parameters (the user input) - activated when user presses the filter button
+// to be received by GET
 document.getElementById('entity-update-button').addEventListener('click', () => {
     let inputCustomerID = document.getElementById('entity-update-number').value
     let inputAmountSpent = document.getElementById('entity-amount-spent-update').value
@@ -77,7 +80,7 @@ document.getElementById('entity-update-button').addEventListener('click', () => 
     req.setRequestHeader('Content-Type', 'application/sql')
     req.send()
 })
-
+// sends a req with the URL that contains the target ID
 let buttons = document.getElementsByName('entity-remove-button')
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', (e) => {
